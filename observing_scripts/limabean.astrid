@@ -1,0 +1,6 @@
+format=spherical
+coordmode=J2000
+veldef=vrad-lsr
+HEAD = NAME RA DEC VEL 
+LimaBean              17:46:09.7 -28:43:31
+LimaBeanOff           17:44:05.0 -28:25:31

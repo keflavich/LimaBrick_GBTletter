@@ -1,0 +1,46 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Darling} \& {Zeiger}(2012)}]{Darling2012b}
+{Darling}, J. \& {Zeiger}, B. 2012, \apjl, 749, L33
+
+\bibitem[{{Federrath} {et~al.}(2010){Federrath}, {Roman-Duval}, {Klessen},
+  {Schmidt}, \& {Mac Low}}]{Federrath2010a}
+{Federrath}, C., {Roman-Duval}, J., {Klessen}, R.~S., {Schmidt}, W., \& {Mac
+  Low}, M.-M. 2010, \aap, 512, A81
+
+\bibitem[{{Ginsburg} {et~al.}(2013){Ginsburg}, {Glenn}, {Rosolowsky},
+  {Ellsworth-Bowers}, {Battersby}, {Dunham}, {Merello}, {Shirley}, {Bally},
+  {Evans}, {Stringfellow}, \& {Aguirre}}]{Ginsburg2013a}
+{Ginsburg}, A. {et~al.} 2013, ArXiv e-prints
+
+\bibitem[{{Henkel} {et~al.}(1982){Henkel}, {Wilson}, \&
+  {Bieging}}]{Henkel1982a}
+{Henkel}, C., {Wilson}, T.~L., \& {Bieging}, J. 1982, \aap, 109, 344
+
+\bibitem[{{Henkel} {et~al.}(1983){Henkel}, {Wilson}, {Walmsley}, \&
+  {Pauls}}]{Henkel1983a}
+{Henkel}, C., {Wilson}, T.~L., {Walmsley}, C.~M., \& {Pauls}, T. 1983, \aap,
+  127, 388
+
+\bibitem[{{Langer} \& {Penzias}(1990)}]{Langer1990a}
+{Langer}, W.~D. \& {Penzias}, A.~A. 1990, \apj, 357, 477
+
+\bibitem[{{Law} {et~al.}(2008){Law}, {Yusef-Zadeh}, \& {Cotton}}]{Law2008a}
+{Law}, C.~J., {Yusef-Zadeh}, F., \& {Cotton}, W.~D. 2008, \apjs, 177, 515
+
+\bibitem[{{Longmore} {et~al.}(2012){Longmore}, {Rathborne}, {Bastian}, {Alves},
+  {Ascenso}, {Bally}, {Testi}, {Longmore}, {Battersby}, {Bressert}, {Purcell},
+  {Walsh}, {Jackson}, {Foster}, {Molinari}, {Meingast}, {Amorim}, {Lima},
+  {Marques}, {Moitinho}, {Pinhao}, {Rebordao}, \& {Santos}}]{Longmore2012b}
+{Longmore}, S.~N. {et~al.} 2012, \apj, 746, 117
+
+\bibitem[{{Rodriguez} \& {Zapata}(2013)}]{Rodriguez2013a}
+{Rodriguez}, L.~F. \& {Zapata}, L. 2013, ArXiv e-prints
+
+\bibitem[{{Yusef-Zadeh} {et~al.}(2009){Yusef-Zadeh}, {Hewitt}, {Arendt},
+  {Whitney}, {Rieke}, {Wardle}, {Hinz}, {Stolovy}, {Lang}, {Burton}, \&
+  {Ramirez}}]{Yusef-Zadeh2009a}
+{Yusef-Zadeh}, F. {et~al.} 2009, \apj, 702, 178
+
+\end{thebibliography}

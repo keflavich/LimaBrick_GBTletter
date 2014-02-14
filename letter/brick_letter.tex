@@ -1,0 +1,338 @@
+% Letter on H2CO Brick
+\input{preface}
+
+Notes on the GBT observations of ``The Brick'', G0.253+0.016, at 6 cm
+(AGBT12B-221) and 2 cm (AGBT14A-110).
+
+
+Skip to Section \ref{sec:interp} if you want to avoid the calibration details.
+
+\section{Data}
+
+\subsection{Continuum}
+Because the \formaldehyde lines are seen in absorption against a continuum
+background, it is crucial to determine how much of the observed continuum at 2
+and 6 cm is behind The Brick.  A comparison between the radio continuum maps
+and the Spitzer 24 \um maps \citep{Yusef-Zadeh2009a} shows a clear
+correlation between the two, particularly for the parallel arched filaments
+next to the well-known giant radio arc (Figure \ref{fig:cont}).  At the position of The Brick, however,
+there is no emission, with surface brightness levels within a factor of 2 of
+the off-plane continuum-free regions (the arched filaments are $\sim20\times$
+brighter).  It is therefore quite clear that The Brick is in the foreground of
+the majority of the radio continuum emission.
+
+The 2 cm continuum shows excellent correlation with the \citet{Law2008a} maps,
+albeit at higher spatial resolution.  Some minor artifacts are evident, but
+they do not overlap with The Brick and therefore are of minor concern.
+
+At 6 cm, we opt to use the high-quality maps constructed by \citet{Law2008a} in
+place of creating our own continuum maps.
+
+\Figure{../figures/continuum_comparison.pdf}
+{Comparison of the continuum at different bands
+(a) Spitzer 24 \um \citep{Yusef-Zadeh2009a}
+(b) GBT C-band \citep{Law2008a}
+(c) GBT X-band \citep{Law2008a}
+(d) GBT Ku-band (this work)
+In panel (d), the labeled green circles show the regions extracted in Section \ref{sec:Spectra}
+}{fig:cont}{0.5}{0}
+
+\subsection{Filling Factor}
+\label{sec:fillingfactor}
+It is evident from maps at multiple wavelengths and the 2 cm \formaldehyde maps
+with resolution $\sim50\arcsec$ that The Brick does not fill the GBT 6 beam at
+any position.  However, along its long axis, it is weakly resolved, so we need
+to derive a separate filling factor for each spectrum extracted from the data
+cube.  The angular extent of The Brick along its short axis is $\sim0.7-0.9
+\arcmin$.  We approximate it as a rectangle with short axis 0.8\arcmin and long
+axis 2\arcmin, which gives a filling factor of 0.75 for a 2.6\arcmin FWHM beam.
+We treat this as an upper limit on the filling factor for further analysis, as
+the absorbing foreground material may not quite fill the area seen as an IRDC.
+
+\subsection{Comparison of 2 cm and 6 cm data}
+Because the data are at different resolution, we smooth the 2 cm data with a
+FWHM=2.46 \arcmin gaussian in the image plane.  We then treat the 2 cm data as
+if it were observed with a 33m diameter telescope; this approach requires
+additional correction for filling factor but is the only sensible way to
+compare the two data sets.
+
+\subsection{Spectra}
+\label{sec:Spectra}
+
+Off subtraction in C-band was challenging; at many frequencies the entire
+mapped area was filled with \formaldehyde \oneone absorption.  Figure
+\ref{fig:offs} shows the entire data set (all integrations in a single
+polarization) at different percentile cuts and the interpolated off spectrum
+eventually used.  Details of the approach are described in Ginsburg et al (in prep).
+
+
+\Figure{../figures/off_spectra_Cband.pdf}
+{A demonstration of the attempts to create a signal-free `off' spectrum for
+calibration.  Note that there is significant signal in the median spectrum
+(yellow), especially at 0 \kms but also seen spread throughout the band.  Given
+the amount of curvature across the observed bandpass, determining an
+appropriate continuum is difficult.  The important part is identifying the
+continuum \emph{shape} from the data, not the absolute magnitude (as the line
+depths do not significantly affect the total power in-band), so we elected to
+use the 99th percentile as our off-spectrum and interpolate across lines with
+signal remaining in that spectrum.  By selecting the 99th percentile, we
+strongly favor the detection of absorption features; we do not expect any
+significant emission features and such features are definitely not widespread
+or able to affect the observation-averaged spectrum.}
+{fig:offs}{0.5}{0}
+
+In the below spectra, the \ammonia spectrum is plotted in normalized units,
+while the \formaldehyde spectra are optical depths, i.e.
+$\tau=-\log(S_\nu/\bar{S_\nu})$.  Negative optical depths would in principle
+indicate emission, however a deep examination of the data reveals that the
+baselines are `lumpy' around 35-57 \kms in the \twotwo line, and as shown in
+Figure \ref{fig:offs}, there are major difficulties in determining the true
+baseline level for the \oneone line.
+
+The three North pointings all suffer from serious negative optical depth issues centered
+around 50 \kms, but The Brick is still evident and reasonably well-matched to \ammonia
+at $\sim20 \kms$.  In both of the ``tip" regions, the \oneone/\twotwo ratio exceeds 5, indicating
+low densities (precision to be added later).
+
+The three ``central'' pointings have modestly lower ratios, but also have clear
+\formaldehydeIso detections with a ratio \formaldehyde/\formaldehydeIso
+$\sim10-15$, which is moderately lower than the lowest $^{12}$C/$^{13}$C ratios
+inferred in the CMZ, $\sim25$ in Sgr B2
+\citep{Langer1990a,Savage1992a}\footnote{\citet{Henkel1982a} and
+\citet{Henkel1983a} also report a $^{12}$C/$^{13}$C ratio $\sim25$ in Sgr B2
+from \formaldehyde, but their approach requires many correction factors}.  
+
+\Figure{../figures/NE_tip_11_22_nh3_spectra.pdf}
+{Spectra of the Northeast pointing.  Black: \formaldehyde \oneone, Red:
+\formaldehyde \twotwo, Green: \ammonia, Blue: H$_2$ $^{13}$CO \oneone.
+Inset: Black shows the \oneone/\twotwo ratio, blue shows the H$_2$ $^{12}$CO/H$_2$ $^{13}$CO \oneone ratio.
+NOTE: The }
+{fig:spec1}{0.5}{0}
+\Figure{../figures/N_center_11_22_nh3_spectra.pdf}
+{Spectra of the North-center pointing.  Black: \formaldehyde \oneone, Red: \formaldehyde \twotwo, Green: \ammonia, Blue: H$_2$ $^{13}$CO \oneone}
+{fig:spec2}{0.5}{0}
+\Figure{../figures/N_tip_11_22_nh3_spectra.pdf}
+{Spectra of the North-tip pointing.  Black: \formaldehyde \oneone, Red: \formaldehyde \twotwo, Green: \ammonia, Blue: H$_2$ $^{13}$CO \oneone}
+{fig:spec3}{0.5}{0}
+\Figure{../figures/SW_tip_11_22_nh3_spectra.pdf}
+{Spectra of the Southwest pointing.  Black: \formaldehyde \oneone, Red: \formaldehyde \twotwo, Green: \ammonia, Blue: H$_2$ $^{13}$CO \oneone}
+{fig:spec4}{0.5}{0}
+\Figure{../figures/S_Center_11_22_nh3_spectra.pdf}
+{Spectra of the South-center pointing.  Black: \formaldehyde \oneone, Red: \formaldehyde \twotwo, Green: \ammonia, Blue: H$_2$ $^{13}$CO \oneone}
+{fig:spec5}{0.5}{0}
+
+\section{Physical Parameters}
+We adopt a velocity gradient $dV/dR = 8 \kms \perpc$, measured from a 50 \kms
+velocity difference across the Brick's 6 pc length.
+
+\section{Hasty Interpretation}
+\label{sec:interp}
+The $\tau$ \oneone/\twotwo ratio varies from $\sim10-15$ at $n\sim10^2-10^3$ \percc to
+$\sim2-3$ at $\sim10^4-10^{4.5}$ \percc.  It then drops to 1 above $10^{4.5} \percc$.
+See Figure \ref{fig:ratiovsdens}.
+
+% ~/work/h2co/limabean/plotcodes/ratio_to_dens_plots.py
+\Figure{../figures/tau_ratio_vs_density_thinlimit_sigmavary_Xm8.5.pdf}
+{The optical depth ratio as a function of \hh density.  The ratio is shown for
+a range of turbulent lognormal density distributions as indicated in the legend;
+$\delta$ indicates a delta-function distribution.
+The gas temperature is assumed to be 20 K (note: 50 K may be more appropriate, but the changes
+are $\sim10\%$), and the \formaldehyde lines
+are assumed to both be optically thin (see Section \ref{sec:opticaldepth}).
+The X-axis indicates the volume-averaged mean \hh density. }
+{fig:ratiovsdens}{0.4}{0}
+
+\FigureTwo{../figures/tau_ratio_vs_density_thinlimit_sigmavary_Xm8.5_withBrickBGsubdata.pdf}
+          {../figures/tau_vs_density_thinlimit_sigmavary_Xm8.5_withBrickBGsubdata.pdf}
+{Optical Depth Ratio (left) and optical depth in each line (right) shown with the
+data overlaid.  The data show the observed optical depth and optical depth ratio
+at the peak of the Brick \oneone optical depth; the observed optical depth and
+optical depth ratio are plotted as partially transparent horizontal lines.  The
+opacity of the plotted lines indicates the number of spectral points that lay
+at that value.  The optical depth ratio spectrum is shown in Figure
+\ref{fig:ratiobgsub}.  The only set of parameters where a single density is
+consistent with \emph{both} the \oneone and the \twotwo optical depth is
+$n\approx10^{3.7} = 5000$ \percc.  There is a degeneracy between density and
+$\sigma_s$, the lognormal density dispersion parameter: Lower turbulence
+(smaller $\sigma_s$) would allow for a larger density at a lower
+$X(\formaldehyde)$, while higher turbulence requires a lower density and a
+higher $X(\formaldehyde)$.
+}
+{fig:modelswithdata}{1}
+
+
+In the S Center and SW Center (Figures \ref{fig:spec4} and \ref{fig:spec5}),
+the density is higher at higher velocity, peaking on the 50 \kms region.
+
+\subsection{Filling Factor revisited}
+The filling factor has an upper limit of 0.75 (Section \ref{sec:fillingfactor}.
+Most likely, there is a difference in the filling factor between the \oneone
+and \twotwo lines for different portions of the line; the \oneone line probably
+traces some `envelope' gas in addition to the denser gas preferentially traced
+by \twotwo.  
+
+In the \twotwo line, the integrated image of The Brick is well-represented by
+an elliptical gaussian with minor axis FWHM $\sim78$\arcsec.  This
+representation yields a geometric area filling factor of 0.58 at the center for
+a 2.6\arcmin (156 \arcsec) beam.
+
+Note that differences between filling factors in the two lines driven by the
+density distribution - e.g., a model of the \twotwo line tracing a bunch of
+``droplets'' in a \oneone ``cloud'' - are accounted for using a turbulent
+density distribution function.
+
+\subsection{Optical Depth}
+\label{sec:opticaldepth}
+It is reasonably likely that significant portions of the cloud are optically
+thick in the \oneone line, although the observed optical depth is $\sim 0.15$,
+which corrects to $0.39$ when accounting for filling factor, still well below
+1.  Any optically thick regions must be subtstructure within The Brick; the
+cloud is not optically thick at all positions even at the peak velocity.  The
+velocity wings are more likely to be optically thin throughout.
+
+The \twotwo line is unlikely to be optically thick to any significant degree,
+with an observed peak optical depth of $\tau\approx0.23$ at 50 \arcsec
+resolution (that resolves the cloud reasonably well).
+
+Since the \oneone line may be thick, but the \twotwo cannot be, the
+\oneone/\twotwo ratio we measure is a \emph{lower limit}.  There could be
+\oneone-absorbing gas we don't see, but we don't miss any \twotwo.
+
+In the most conservative scenario, we are measuring \emph{upper limits} on the
+gas density.
+
+\subsection{Density}
+The lowest ratio reliably observed is $r\sim1.9$ at $v_{LSR}\approx 43 \kms$,
+which corresponds to a density of $n\sim2\ee{4}$\percc \emph{if} one assumes a
+$\delta$-function density distribution, i.e. no turbulence, which is
+implausible.  Using a turbulent density distribution that is probably typical
+of the Galactic disk, a lognormal with width $\sigma_{s} = 1$
+\citep{Ginsburg2013a,Federrath2010a}, the density is closer to $n\sim
+6\ee{3}$\percc.  Much greater turbulence pushes the volume-averaged density
+further down.
+
+These density measurements are significantly inconsistent with the global
+averages presented by \citet{Longmore2012b}.  Even in the physically
+unreasonable non-turbulent case, the \emph{peak} \formaldehyde density is
+limited to be $\sim4\times$ lower than the global average presented by
+\citet{Longmore2012b}, and the majority of the \formaldehyde velocity channels
+require a substantially ($2-5\times$) lower density.
+
+This difference cannot easily be reconciled.  Even if The Brick is assumed to
+be oblate (a hamburger seen edge-on) rather than prolate as assumed in
+\citet{Longmore2012b}, the dust-derived average density is $\approx3\ee{4}$
+\percc.
+
+If the dust temperature was significantly underestimated, the resulting lower mass 
+would bring the densities into closer agreement, but there is no reason to believe
+the dust temperatures are incorrect.
+
+\subsubsection{Please take with salt for further consumption}
+One possibility that works technically but is physically implausible is that
+there are many high-density, compact droplets of gas that contribute
+significantly to the dust absorption but are small enough and compact enough to
+be optically thick in \formaldehyde \oneone, therefore hiding significant
+amounts of gas.  A model in which these are part of a smooth density
+distribution does not fit the data, unless some sort of pathological density
+distribution is invoked.
+
+Are there any calibration or data issues that could result in the observed low
+density?  If the C-band background was significantly underestimated, the \oneone
+optical depths would in reality be lower, which would drive up the density.
+The \citet{Law2008a} maps used to determine the 6 cm \oneone continuum level
+are reliable, though, and we converted them from flux density to surface brightness
+appropriately.  Our own C-band map agrees with the \citet{Law2008a} map, albeit
+with a significant negative offset; it is possible that we've underestimated
+the amplitude of the \formaldehyde absorption (by no more than 20\%), which
+goes in the wrong direction.
+
+In the \twotwo line, no previous maps are available, so we are forced to rely
+on our own continuum image.  The image quality, as shown in Figure
+\ref{fig:cont}, is excellent, but the zero-point is uncertain.  We added an
+offset value of 0.4 K to ensure that there were no negative positions in the
+continuum map, which is at most a 15\% correction.  The continuum levels around
+The Brick in the apertures we selected are near zero anyway, so the continuum
+has a small effect here.
+
+Another possibility is that the absorption observed is dominated by `weird'
+lines of sight from compact background sources that dominate the total
+continuum: this hypothesis is strictly ruled out by the faintness of the
+compact sources detected by \citet{Rodriguez2013a}.
+
+Could \formaldehyde emission be to blame?  While no \formaldehyde emission is
+detected in our observations, the large beam may be to blame.  Above
+$n\sim10^5$ \percc, \formaldehyde goes into emission even above a 10 K
+background (which is approximately the brightest background in The Brick; see
+Figure 2 in \citet{Darling2012b} for excitation modeling).  Given that the
+absorption signature is dominant, \emph{most} of the gas (by mass) must be at a
+density below the emission threshold, but that is at least moderately
+consistent with the \citet{Longmore2012b} mean density measurement, which is
+just shy of $10^5$ \percc.  Another argument against \formaldehyde emission
+being significant is the good agreement between the \formaldehyde and \ammonia
+2-2 profiles in Figures \ref{fig:spec1}-\ref{fig:spec5}.
+
+There is good motivation to look for \formaldehyde emission with an
+interferometer, as the high average density determined by \citet{Longmore2012b}
+suggests that such regions should exist within The Brick, and the ALMA data
+similarly show some (albeit few) high-density regions.  Nonetheless, it seems
+unlikely that emission sources could address the density discrepancy.
+
+\subsubsection{Two distributions?}
+Could the \formaldehyde observations be explained by a core-in-cloud model,
+where a cloud of $n\sim10^2$ \percc gas dominates the mass and column density,
+while a ``core'' of $n\sim10^5$ \percc gas provides the \twotwo absorption?
+
+This hypothesis carries a prediction: to be high-column, low-volume density,
+it must be spatially large and therefore should be extended on the sky. This
+means we should be able to subtract it off.  I've attempted this by selecting
+the high-signal region (basically one beam area) centered on 20 km/s and The Brick
+and creating a ``rind" mask (approximately an annulus) to subtract off (see Figure \ref{fig:bgaperture}).
+
+% bgsub_plotting
+\Figure{../figures/avgspectrum_ratio_bgsubtraction_smooth.pdf}
+{The \formaldehyde \oneone/\twotwo optical depth ratio centered on The Brick
+before (red) and after (black) subtracting a background annulus.  The
+\twotwo data was smoothed to \oneone resolution prior to background-subtraction.
+The aperture definition is shown in Figure \ref{fig:bgaperture}.}
+{fig:ratiobgsub}{0.5}{0}
+
+% integrate_brick
+% bgsub_image_figure
+\Figure{../figures/bgsub_aperture_mask.pdf}
+{Image showing the background aperture defined for use in Figure \ref{fig:ratiobgsub}.  The red contour region
+shows the background area over which the average spectrum was taken to be ``background''.  
+The \formaldehyde figures show the optical depth integrated over the range $-20 < v_{LSR} < 50$ \kms.}
+{fig:bgaperture}{0.5}{0}
+
+Performing this subtraction does bring the \oneone/\twotwo ratio down a little,
+but only to $\sim2$, as shown in Figure \ref{fig:ratiobgsub}.  That still
+requires densities $n<10^{4.2} \percc$, most likely $n<10^4 \percc$.
+
+Another way to look at it is to ask what's left over if we assume that the \twotwo line shows
+only gas with $n\approx10^5\percc$.  We can use the fact that $\tau_{\oneone} = \tau_{\twotwo}$ 
+at these high densities, and assume that they are still both in absorption, and simply subtract
+$\tau_{\twotwo}$ from $\tau_{\oneone}$.  We do this in Figure \ref{fig:oneoneMtwotwo}.
+
+% bgsub_plotting
+\Figure{../figures/avgspectrum_11minus22.pdf}
+{Spectrum of $\tau_{\oneone} - \tau_{\twotwo}$.  This remaining gas would have an implausibly
+high \oneone/\twotwo ratio $ > 26$ using a $3-\sigma$ upper limit on the \twotwo line, so 
+this explanation doesn't really work, but if it did it would imply a high-density core with an extremely low-density
+surrounding envelope and no continuous distribution between them.}
+{fig:oneoneMtwotwo}{0.5}{0}
+
+Another way to look at the data is in the form of a spectral grid (Figure \ref{fig:specgrid}).
+
+
+\Figure{../figures/spectralgrid_optdepth.pdf}
+{Grid of optical depth spectra covering The Brick, with locations labeled.
+Black is \formaldehyde \oneone, blue is \formaldehydeIso \oneone, and red is
+\formaldehyde \twotwo.  The resolution is 2.5\arcmin but the sampling is
+0.5\armcin, so this map shows only a little more than one full beam.  The -20
+to 50 \kms component of The Brick is low density throughout.  The 70 \kms
+cloud, by contrast, appears to be modestly higher density.}
+{fig:specgrid}{0.6}{0}
+
+
+\input{solobib}
+\end{document}
