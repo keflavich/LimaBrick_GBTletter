@@ -31,6 +31,7 @@ files = [outpath+'14A_110_9to54_A13_F1.fits',
 for fn in files:
     makecube.add_file_to_cube(fn,
                               cubename+'.fits',nhits=cubename+'_nhits.fits',wcstype='V',
+                              chmod=True,
                               add_with_kernel=True,
                               kernel_fwhm=20./3600.,
                               velocityrange=[-400,400],excludefitrange=[-125,250],
@@ -79,11 +80,13 @@ for cubename,restfreq,samplers in (
               for ii in xrange(len(samplers))]]
     for fn in files:
         makecube.add_file_to_cube(fn,
-            cubename+'.fits',nhits=cubename+'_nhits.fits',wcstype='V',
-            add_with_kernel=True,
-            kernel_fwhm=20./3600.,
-            velocityrange=[-400,400],excludefitrange=[-150,225],
-            smoothto=2)
+                                  cubename+'.fits',
+                                  nhits=cubename+'_nhits.fits', wcstype='V',
+                                  add_with_kernel=True, chmod=True,
+                                  kernel_fwhm=20./3600.,
+                                  chmod=True,
+                                  velocityrange=[-400,400],
+                                  excludefitrange=[-150,225], smoothto=2)
 
     os.system('chmod +x %s_starlink.sh' % cubename)
     os.system('%s_starlink.sh' % cubename)

@@ -29,10 +29,13 @@ files = [outpath+'12B_221_6to21_A13_F1.fits',
 
 for fn in files:
     makecube.add_file_to_cube(fn,
-                              cubename+'.fits',nhits=cubename+'_nhits.fits',wcstype='V',
+                              cubename+'.fits', nhits=cubename+'_nhits.fits',
+                              wcstype='V', 
+                              chmod=True,
                               add_with_kernel=True,
                               kernel_fwhm=90./3600.,
-                              velocityrange=[-400,400],excludefitrange=[-225,250],
+                              velocityrange=[-400, 400],
+                              excludefitrange=[-225, 250], 
                               diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
                               smoothto=2)
 
@@ -46,6 +49,7 @@ for sr in ([6,21],[22,32]):
         makecube.add_file_to_cube(fn,
                                   cn+'.fits',nhits=cn+'_nhits.fits',wcstype='V',
                                   add_with_kernel=True,
+                                  chmod=True,
                                   kernel_fwhm=90./3600.,
                                   velocityrange=[-400,400],excludefitrange=[-225,250],
                                   smoothto=2)
@@ -80,6 +84,7 @@ for fn in files:
                               kernel_fwhm=90./3600.,
                               velocityrange=[-400,400],excludefitrange=[-225,250],
                               diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
+                              chmod=True,
                               smoothto=2)
 os.system(outpath+'LimaBean_H2CO11_cube_scan2_starlink.sh')
 
@@ -116,28 +121,29 @@ for cubename,restfreq,samplers in (
         ('LimaBean_H112a_cube', 4.61879e9, ('C26','C30')),
         ('LimaBean_OHF44_cube', 5.52344e9, ('A10','A14')),
         ('LimaBean_CH3NH2_cube', 5.19543e9, ('B21','B17'))
-            ):
+       ):
 
 
     #makecube.generate_header(0.256, 0.0220, naxis1=24, naxis2=24, pixsize=60,
     #        naxis3=2400, cd3=1.0, clobber=True, restfreq=restfreq)
     makecube.generate_header(0.256, 0.0220, naxis1=100, naxis2=100, pixsize=15,
-            naxis3=800, cd3=1.0, clobber=True, restfreq=restfreq)
+                             naxis3=800, cd3=1.0, clobber=True,
+                             restfreq=restfreq)
     makecube.make_blank_images(cubename,clobber=True)
 
-    files = [
-             outpath+'12B_221_6to21_%s_F1.fits' % samplers[0],
+    files = [outpath+'12B_221_6to21_%s_F1.fits' % samplers[0],
              outpath+'12B_221_6to21_%s_F1.fits' % samplers[1],
              # there was one noisy scan, so the whole damned thing gets commented out
              #outpath+'12B_221_22to32_%s_F1.fits' % samplers[0],
              #outpath+'12B_221_22to32_%s_F1.fits' % samplers[1],]
-            ]
+             ]
     for fn in files:
         makecube.add_file_to_cube(fn,
-            cubename+'.fits',nhits=cubename+'_nhits.fits',wcstype='V',
-            add_with_kernel=True,
-            kernel_fwhm=90./3600.,
-            diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
+                                  cubename+'.fits',
+                                  nhits=cubename+'_nhits.fits', wcstype='V',
+                                  add_with_kernel=True, kernel_fwhm=90./3600.,
+                                  chmod=True,
+                                  diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
             velocityrange=[-400,400],excludefitrange=[-150,225])
 
     os.system('chmod +x %s_starlink.sh' % cubename)
