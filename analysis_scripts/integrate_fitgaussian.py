@@ -1,11 +1,18 @@
+"""
+Integrate fit gaussian
+----------------------
+
+Fit a 2D gaussian to the integrated optical depth cube of the 2-2 line to
+determine the approximate volume and expected volume density of The Brick.
+"""
+from paths import datapath
 from astropy.io import fits
-from agpy import gaussfitter
+from gaussfitter import gaussfitter
 from astropy import units as u
 from astropy import constants
 import pylab as pl
 import numpy as np
 
-datapath = '/Users/adam/work/gc/limabean/'
 cube22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube.fits')
 cube22h = fits.getheader(datapath+'LimaBean_H2CO22_taucube.fits')
 
@@ -26,10 +33,14 @@ print "Widths: ",width_x_as,width_y_as
 width_x_pc = ((width_x_as/u.rad) *8500*u.pc).to(u.pc)
 width_y_pc = ((width_y_as/u.rad) *8500*u.pc).to(u.pc)
 print "PC: ",width_x_pc,width_y_pc
+print "Effective radius (pc): ",(width_x_pc*width_y_pc)
+print "Longmore 2012 effective radius: 2.8pc"
 volume_prolate = 4/3. * np.pi * width_x_pc * width_y_pc**2
 volume_oblate = 4/3. * np.pi * width_x_pc**2 * width_y_pc
 print "Prolate: "
 print "Volume: ",volume_prolate
+
+# From Longmore et al 2012, based on dust
 mass = 1.2e5*u.M_sun
 massdensity = (mass/volume_prolate).to(u.g/u.cm**3)
 print "Mass Density: ",massdensity

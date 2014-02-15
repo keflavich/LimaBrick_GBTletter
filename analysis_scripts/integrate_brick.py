@@ -1,9 +1,7 @@
+from paths import datapath
 from astropy.io import fits
 from FITS_tools import strip_headers
 import numpy as np
-
-
-datapath = '/Users/adam/work/gc/limabean/'
 
 vrange = [-20,50]
 

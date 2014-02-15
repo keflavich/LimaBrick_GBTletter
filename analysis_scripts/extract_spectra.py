@@ -1,10 +1,10 @@
+from paths import datapath
+from paths import figpath as figurepath
 import os
 import pyspeckit
 import pyregion
 import pylab as pl
 
-datapath = os.path.expanduser('~/work/gc/limabean/')
-figurepath = os.path.expanduser('~/work/h2co/limabean/figures/')
 #scube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits')
 scube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits')
 scube11.xarr.convert_to_unit('km/s')

@@ -1,7 +1,6 @@
 import aplpy
 import pylab as pl
-
-datapath = '/Users/adam/work/gc/limabean/'
+from paths import datapath,figpath
 
 f = pl.figure(9,figsize=[12,4])
 if f.get_figheight() != 4 or f.get_figwidth != 12:
@@ -11,11 +10,11 @@ else:
     pl.clf()
 
 Figures = [
-    aplpy.FITSFigure('/Users/adam/work/gc/limabean/limabean_MIPS_24_crop.fits',
+    aplpy.FITSFigure(datapath+'limabean_MIPS_24_crop.fits',
                      figure=pl.figure(9),convention='calabretta', subplot=[0.1,0.1,0.3,0.8]),
-    aplpy.FITSFigure('/Users/adam/work/gc/limabean/LimaBean_H2CO11_taucube_integrated.fits',
+    aplpy.FITSFigure(datapath+'LimaBean_H2CO11_taucube_integrated.fits',
                      figure=pl.figure(9),convention='calabretta', subplot=[0.4,0.1,0.3,0.8]),
-    aplpy.FITSFigure('/Users/adam/work/gc/limabean/LimaBean_H2CO22_taucube_integrated.fits',
+    aplpy.FITSFigure(datapath+'LimaBean_H2CO22_taucube_integrated.fits',
                      figure=pl.figure(9),convention='calabretta', subplot=[0.7,0.1,0.3,0.8]),
     ]
 
@@ -47,6 +46,6 @@ for F in Figures:
     F.refresh()
 
 
-Figures[0].save('/Users/adam/work/h2co/limabean/figures/bgsub_aperture_mask.pdf')
+Figures[0].save(figpath+'bgsub_aperture_mask.pdf')
 
 pl.show()

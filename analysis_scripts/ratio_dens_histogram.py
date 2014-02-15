@@ -1,8 +1,7 @@
+from paths import datapath
 import pyspeckit
 import pylab as pl
 import numpy as np
-
-datapath = '/Users/adam/work/gc/limabean/'
 
 r = pyspeckit.Spectrum(datapath+'Brick_RatioSpectrum_BGsub.fits')
 r2 = pyspeckit.Spectrum(datapath+'Brick_RatioSpectrum.fits')

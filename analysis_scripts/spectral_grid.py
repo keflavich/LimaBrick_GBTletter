@@ -1,3 +1,4 @@
+from paths import datapath,figpath
 import pyspeckit
 import itertools
 import astropy.io.fits as pyfits
@@ -9,8 +10,6 @@ from FITS_tools import strip_headers
 from sdpy import makecube
 do_some_plots=True
 np.seterr(all='ignore')
-
-datapath = '/Users/adam/work/gc/limabean/'
 
 def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'),
                   h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_cube_sub.fits'),
@@ -83,23 +82,23 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
         pl.draw()
 
 spectral_grid()
-pl.savefig('/Users/adam/work/h2co/limabean/figures/spectralgrid_absorption.pdf')
+pl.savefig(figpath+'spectralgrid_absorption.pdf')
 
-spectral_grid(cube11=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H2CO11_taucube.fits'),
-              cube22=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H2CO22_taucube_smoothtoCband.fits'),
-              h213co11cube=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H213CO_taucube.fits'),
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits'),
               figure=pl.figure(2,figsize=(10,10)),
               yrange=(-0.05,0.2),
               ratio=False)
-pl.savefig('/Users/adam/work/h2co/limabean/figures/spectralgrid_optdepth.pdf')
+pl.savefig(figpath+'spectralgrid_optdepth.pdf')
 
-spectral_grid(cube11=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H2CO11_taucube.fits'),
-              cube22=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H2CO22_taucube_smoothtoCband.fits'),
-              h213co11cube=pyspeckit.Cube('/Users/adam/work/gc/limabean/LimaBean_H213CO_taucube.fits'),
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits'),
               figure=pl.figure(2,figsize=(10,10)),
               yrange=(-0.05,0.2),
               dx=4,dy=4,
               xc=51,
               yc=49,
               ratio=False)
-pl.savefig('/Users/adam/work/h2co/limabean/figures/spectralgrid_optdepth_wide.pdf')
+pl.savefig(figpath+'spectralgrid_optdepth_wide.pdf')

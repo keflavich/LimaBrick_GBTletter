@@ -1,10 +1,9 @@
+from paths import datapath
 import FITS_tools
 import FITS_tools.cube_regrid
 from astropy.io import fits
 import pyregion
 import numpy as np
-
-datapath = '/Users/adam/work/gc/limabean/'
 
 cube22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube.fits')
 cube22h = fits.getheader(datapath+'LimaBean_H2CO22_taucube.fits')

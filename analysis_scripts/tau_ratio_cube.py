@@ -1,7 +1,7 @@
+from paths import datapath
 from astropy.io import fits
 import numpy as np
-
-datapath = '/Users/adam/work/gc/limabean/'
+import h2co_modeling
 
 h2co11 = fits.getdata(datapath+'LimaBean_H2CO11_taucube.fits')
 h2co22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits')
@@ -38,8 +38,7 @@ nfinpix = np.isfinite(ratio).max(axis=0).sum()
 nokpix = (np.isfinite(sn11)*np.isfinite(sn22)).max(axis=0).sum()
 print "Unfiltered pixels ",nfinpix," of ", nokpix," or ",nfinpix/float(nokpix)*100,"%"
 
-import h2co_modeling
-radexdatapath = '/Users/adam/work/h2co/modeling_paper/radex_data/'
+radexdatapath = './radex/'
 faur = h2co_modeling.SmoothtauModels(datafile=radexdatapath+'faure/1-1_2-2_XH2CO_fixed_faure.dat')
 
 abund = -8.5
