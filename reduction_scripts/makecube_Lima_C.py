@@ -123,6 +123,8 @@ for cubename,restfreq,samplers in (
         ('LimaBean_CH3NH2_cube', 5.19543e9, ('B21','B17'))
        ):
 
+    cubename = outpath+cubename
+
 
     #makecube.generate_header(0.256, 0.0220, naxis1=24, naxis2=24, pixsize=60,
     #        naxis3=2400, cd3=1.0, clobber=True, restfreq=restfreq)
