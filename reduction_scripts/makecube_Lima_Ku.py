@@ -82,9 +82,9 @@ for cubename,restfreq,samplers in (
         makecube.add_file_to_cube(fn,
                                   cubename+'.fits',
                                   nhits=cubename+'_nhits.fits', wcstype='V',
-                                  add_with_kernel=True, chmod=True,
-                                  kernel_fwhm=20./3600.,
+                                  add_with_kernel=True, 
                                   chmod=True,
+                                  kernel_fwhm=20./3600.,
                                   velocityrange=[-400,400],
                                   excludefitrange=[-150,225], smoothto=2)
 
