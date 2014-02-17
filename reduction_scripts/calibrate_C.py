@@ -89,6 +89,6 @@ for scanrange, obsmode in zip(([6,21],[22,32]), ['DecLatMap','RALongMap']):
                                                 dataarr=dataarr,
                                                 obsmode=obsmode,
                                                 exclude_spectral_ends=10.,
-                                                min_scale_ref=10,
+                                                min_scale_reference=10,
                                                 sourcename=sourcename,
                                                 off_template=off_template)
