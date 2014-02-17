@@ -9,25 +9,27 @@ outpath = outpath % "LimaBean"
 # to ignore div-by-zero errors?
 np.seterr(all='ignore')
 
-cubename=outpath+'LimaBean_H2CO22_cube'
+cubename = os.path.join(outpath,'LimaBean_H2CO22_cube')
 # 15' x 12 ' 
 makecube.generate_header(0.256, 0.0220, naxis1=100, naxis2=100, pixsize=15,
         naxis3=800, cd3=1.0, clobber=True, restfreq=14.48848e9)
 makecube.make_blank_images(cubename,clobber=True)
 
-files = [outpath+'14A_110_9to54_A13_F1.fits',
-         outpath+'14A_110_9to54_A9_F1.fits',
-         outpath+'14A_110_9to54_C25_F2.fits',
-         outpath+'14A_110_9to54_C29_F2.fits',
-         outpath+'14A_110_62to98_A13_F1.fits',
-         outpath+'14A_110_62to98_A9_F1.fits',
-         outpath+'14A_110_62to98_C25_F2.fits',
-         outpath+'14A_110_62to98_C29_F2.fits',
-         outpath+'14A_110_108to140_A13_F1.fits',
-         outpath+'14A_110_108to140_A9_F1.fits',
-         outpath+'14A_110_108to140_C25_F2.fits',
-         outpath+'14A_110_108to140_C29_F2.fits',
+files = [os.path.join(outpath,x) for x in
+         ['14A_110_9to54_A13_F1.fits',
+         '14A_110_9to54_A9_F1.fits',
+         '14A_110_9to54_C25_F2.fits',
+         '14A_110_9to54_C29_F2.fits',
+         '14A_110_62to98_A13_F1.fits',
+         '14A_110_62to98_A9_F1.fits',
+         '14A_110_62to98_C25_F2.fits',
+         '14A_110_62to98_C29_F2.fits',
+         '14A_110_108to140_A13_F1.fits',
+         '14A_110_108to140_A9_F1.fits',
+         '14A_110_108to140_C25_F2.fits',
+         '14A_110_108to140_C29_F2.fits',
          ]
+        ]
 
 for fn in files:
     makecube.add_file_to_cube(fn,
@@ -39,7 +41,7 @@ for fn in files:
                               diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
                               smoothto=2)
 
-os.system(outpath+'LimaBean_H2CO22_cube_starlink.sh')
+os.system(os.path.join(outpath,'LimaBean_H2CO22_cube_starlink.sh'))
 
 makecube.make_flats(cubename,vrange=[-20,60],noisevrange=[250,300])
 
@@ -72,12 +74,15 @@ for cubename,restfreq,samplers in (
         #('LimaBean_CH3NH2_cube', 5.19543e9, ('B21','B17'))
             ):
 
+    cubename = os.path.join(outpath,cubename)
+
     makecube.generate_header(0.256, 0.0220, naxis1=100, naxis2=100, pixsize=15,
             naxis3=800, cd3=1.0, clobber=True, restfreq=restfreq)
     makecube.make_blank_images(cubename,clobber=True)
 
     files = [x for scan1,scan2 in ([9,54],[62,98],[108,140]) for x in
-             [outpath+'14A_110_%ito%i_%s_F%i.fits' % (scan1,scan2,samplers[ii],sampler_feeds[samplers[ii]])
+             [os.path.join(outpath,
+                           '14A_110_%ito%i_%s_F%i.fits' % (scan1,scan2,samplers[ii],sampler_feeds[samplers[ii]]))
               for ii in xrange(len(samplers))]]
     for fn in files:
         makecube.add_file_to_cube(fn,
@@ -102,7 +107,7 @@ from agpy.cubes import smooth_cube
 
 for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C18O22_cube'):
 
-    cubename = outpath+cubename
+    cubename = os.path.join(outpath,cubename)
     cube = fits.open(cubename+"_sub.fits")
     # kernel = ((2.5*60)**2 -  50.**2)**0.5 / sqrt(8*log(2)) = 60 arcsec
     # 60 arcsec / 15 "/pixel = 4
