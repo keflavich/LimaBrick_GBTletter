@@ -5,6 +5,7 @@ import sys
 from sdpy import makecube,make_off_template,calibrate_map_scans
 import numpy as np
 from paths import outpath
+outpath = outpath % "LimaBean"
 # to ignore div-by-zero errors?
 np.seterr(all='ignore')
 
