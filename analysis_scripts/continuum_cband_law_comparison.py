@@ -18,8 +18,8 @@ okimg = np.isfinite(ccontdata).astype('float')
 
 resampled_law = FITS_tools.hcongrid.hcongrid(lawdata, law_hdr, ccont_hdr)
 
-xok = (np.isfinite(resampled_law) * (resampled_law != 0)).max(axis=0)
-yok = (np.isfinite(resampled_law) * (resampled_law != 0)).max(axis=1)
+xok = (np.isfinite(ccontdata) * (ccontdata != 0)).max(axis=0)
+yok = (np.isfinite(ccontdata) * (ccontdata != 0)).max(axis=1)
 
 croprange_x = np.argmax(xok),np.argmax(xok)+xok.sum()
 croprange_y = np.argmax(yok),np.argmax(yok)+yok.sum()
@@ -46,8 +46,10 @@ F1 = aplpy.FITSFigure(ccont_hdu, convention='calabretta', subplot=sp1b, figure=f
 F1._ax1.set_title("Our Data")
 F2 = aplpy.FITSFigure(law_hdu, convention='calabretta', subplot=sp2b, figure=fig)
 F2._ax1.set_title("Law 2008")
+vmin = -1
+vmax = 37
 for F in (F1,F2):
-    F.show_grayscale(vmin=0.0, vmax=20, stretch='log', vmid=-0.5, invert=True)
+    F.show_grayscale(vmin=vmin, vmax=vmax, stretch='log', vmid=vmin-0.5, invert=True)
     F.set_tick_labels_xformat('dd.d')
     F.set_tick_labels_yformat('dd.d')
     F.set_tick_xspacing(0.3)
@@ -61,13 +63,13 @@ F2.colorbar.set_ticks([0.1,0.5,1,2.5,5,10,20])
 
 pl.subplot(2,1,2)
 ok = np.isfinite(cropped_law) # ccont is all "ok"
-pl.plot(np.linspace(0,20),np.linspace(0,20),'k--',linewidth=2,alpha=0.5)
-pl.plot(cropped_ccont[ok],cropped_law[ok],',')
+pl.plot(np.linspace(vmin,vmax),np.linspace(vmin,vmax),'k--',linewidth=2,alpha=0.5)
+pl.plot(cropped_law[ok],cropped_ccont[ok],',')
 #pl.plot(cropped_ccont[np.round(cropped_rsok).astype('bool')],cropped_law[np.round(cropped_rsok).astype('bool')],'.',color='r')
 #mpl_plot_templates.adaptive_param_plot(cropped_ccont[ok],cropped_law[ok],bins=30,threshold=10,fill=True)
-pl.xlabel(r'$T_B(K)$ Ours')
-pl.ylabel(r'$T_B(K)$ Law')
-pl.axis([0,20,0,20])
+pl.ylabel(r'$T_B(K)$ Ours')
+pl.xlabel(r'$T_B(K)$ Law')
+pl.axis([vmin,vmax,vmin,vmax])
 pl.savefig(figpath+'comparison_Law_to_Cband.pdf')
 
 pl.show()

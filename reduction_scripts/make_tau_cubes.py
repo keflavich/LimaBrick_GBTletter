@@ -8,6 +8,7 @@ from astropy.io import fits
 import astropy.units as u
 import FITS_tools
 from paths import outpath
+import os
 
 datapath = outpath % "LimaBean"
 
