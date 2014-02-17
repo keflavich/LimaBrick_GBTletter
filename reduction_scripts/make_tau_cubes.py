@@ -1,3 +1,7 @@
+"""
+This code is to remake the tau cubes using the C-band image from Casey Law's
+survey, which contains more reliable estimates of the continuum
+"""
 import sdpy
 import numpy as np
 from astropy.io import fits

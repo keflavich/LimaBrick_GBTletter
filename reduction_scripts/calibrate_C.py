@@ -79,8 +79,16 @@ for scanrange, obsmode in zip(([6,21],[22,32]), ['DecLatMap','RALongMap']):
         print "Sanity check.  Off_template: ",off_template
 
         calibrate_map_scans.calibrate_cube_data(filename,
-                outpath+'12B_221_%ito%i_%s_F1.fits' %
-                (ref1,ref2,sampler),scanrange=scanrange,refscan1=ref1,refscan2=ref2,
-                feednum=1, refscans=refscans, sampler=sampler, filepyfits=filepyfits,
-                datapfits=datapfits, tau=0, dataarr=dataarr, obsmode=obsmode,
-                sourcename=sourcename, off_template=off_template)
+                                                outpath+'12B_221_%ito%i_%s_F1.fits' % (ref1,ref2,sampler),
+                                                scanrange=scanrange,
+                                                feednum=1,
+                                                refscans=refscans,
+                                                sampler=sampler,
+                                                filepyfits=filepyfits,
+                                                datapfits=datapfits, tau=0,
+                                                dataarr=dataarr,
+                                                obsmode=obsmode,
+                                                exclude_spectral_ends=10.,
+                                                min_scale_ref=10,
+                                                sourcename=sourcename,
+                                                off_template=off_template)

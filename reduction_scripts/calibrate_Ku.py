@@ -94,7 +94,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap'),([9,
 
             calibrate_map_scans.calibrate_cube_data(filename,
                     outpath+'14A_110_%ito%i_%s_F%i.fits' % (ref1,ref2,sampler,feednum),
-                    scanrange=scanrange,refscan1=ref1,refscan2=ref2,
+                    scanrange=scanrange,
                     feednum=feednum, refscans=refscans, sampler=sampler, filepyfits=filepyfits,
                     datapfits=datapfits, tau=0.0116, dataarr=dataarr, obsmode=obsmode,
                     sourcename=sourcename, off_template=off_template)
