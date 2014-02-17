@@ -37,14 +37,19 @@ if os.path.exists(ccontfile):
     cbfreq = 4.829 * u.GHz
     gbbeam_5ghz = 1.22 * ((cbfreq.to(u.m, u.spectral()) / (100*u.m)) * u.rad).decompose()
     fwhm = np.sqrt(8*np.log(2))
-    ktojy5ghz = (1*u.K).to(u.Jy,u.brightness_temperature((2*np.pi*(gbbeam_5ghz/fwhm)**2), cbfreq))
+    bmaj=4.2413E-02*u.deg
+    bmin=4.2413E-02*u.deg
+    ktojy5ghz = (1*u.K).to(u.Jy,u.brightness_temperature((2*np.pi*(bmaj*bmin/fwhm**2)), cbfreq))
 
     cont_K = (ccont/ktojy5ghz).value
     outfile = fits.PrimaryHDU(data=cont_K, header=header)
     outfile.writeto(reproj_contfile,clobber=True)
 
     for fn in fivecubes:
-        sdpy.makecube.make_taucube(datapath+fn.strip("_sub.fits"), reproj_contfile, etamb=0.98)
+        sdpy.makecube.make_taucube(datapath+fn.strip("_sub.fits"), 
+                                   reproj_contfile,
+                                   outsuffix="_claw.fits",
+                                   etamb=0.98)
 else:
     print "Casey Law's C-band continuum images are not available.",
     print "We'll use our own continuum instead (which is OK, but less reliable)."
