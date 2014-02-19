@@ -16,18 +16,18 @@ makecube.generate_header(0.256, 0.0220, naxis1=100, naxis2=100, pixsize=15,
 makecube.make_blank_images(cubename,clobber=True)
 
 files = [os.path.join(outpath,x) for x in
-         ['14A_110_9to54_A13_F1.fits',
-         '14A_110_9to54_A9_F1.fits',
-         '14A_110_9to54_C25_F2.fits',
-         '14A_110_9to54_C29_F2.fits',
-         '14A_110_62to98_A13_F1.fits',
-         '14A_110_62to98_A9_F1.fits',
-         '14A_110_62to98_C25_F2.fits',
-         '14A_110_62to98_C29_F2.fits',
-         '14A_110_108to140_A13_F1.fits',
-         '14A_110_108to140_A9_F1.fits',
-         '14A_110_108to140_C25_F2.fits',
-         '14A_110_108to140_C29_F2.fits',
+         [#'14A_110_9to54_A13_F1.fits',
+          #'14A_110_9to54_A9_F1.fits',
+          #'14A_110_9to54_C25_F2.fits',
+          #'14A_110_9to54_C29_F2.fits',
+          '14A_110_62to98_A13_F1.fits',
+          '14A_110_62to98_A9_F1.fits',
+          '14A_110_62to98_C25_F2.fits',
+          '14A_110_62to98_C29_F2.fits',
+          #'14A_110_108to140_A13_F1.fits',
+          #'14A_110_108to140_A9_F1.fits',
+          #'14A_110_108to140_C25_F2.fits',
+          #'14A_110_108to140_C29_F2.fits',
          ]
         ]
 
