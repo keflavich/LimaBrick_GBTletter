@@ -3,7 +3,8 @@ Not part of the standard data pipeline:
     This is a set of experiments to examine whether there may be issues with
     the continuum estimated with the standard reduction technique.
 """
-import astropy.io.fits as pyfits
+from astropy.io import fits
+pyfits = fits
 from sdpy import makecube,make_off_template,calibrate_map_scans
 from sdpy.make_off_template import make_off
 import numpy as np
@@ -30,13 +31,13 @@ feednum = 1
 
 
 for min_scale_reference in (False,1,10):
-    for tsysmode in ('perint','perscan'):
+    for tsysmethod in ('perint','perscan'):
 
         # determine_best_off_Ku reveals that there is no need to interpolate the offs;
         # even with a standard median there is no obvious signal
         # (even at the 1% level, no signal!  This is surprising.)
+        savefile = AGBT14A_110_path+"AGBT14A_110_01_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
         if False: # skip this because we don't want to override the "real" version
-            savefile = AGBT14A_110_path+"AGBT14A_110_01_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
             off_template,off_template_in = \
                     make_off(filename, scanrange=scanrange,
                              #exclude_velo=[-10,70],
@@ -52,8 +53,10 @@ for min_scale_reference in (False,1,10):
                              linefreq=14.48848e9,
                              extension=1,
                              exclude_spectral_ends=10)
+        else:
+            off_template, off_template_in = fits.getdata(savefile+'_offspectra.fits')
 
-        experiment_suffix = "%s_msr%i" % (tsysmode,min_scale_reference)
+        experiment_suffix = "%s_msr%i" % (tsysmethod,min_scale_reference)
         outfn = outpath+'14A_110_%ito%i_%s_F%i_%s.fits' % (ref1,ref2,sampler,feednum,experiment_suffix)
         calibrate_map_scans.calibrate_cube_data(filename,
                                                 outfn,
@@ -68,7 +71,7 @@ for min_scale_reference in (False,1,10):
                                                 dataarr=dataarr,
                                                 obsmode=obsmode,
                                                 sourcename=sourcename,
-                                                tsysmode=tsysmode,
+                                                tsysmethod=tsysmethod,
                                                 off_template=off_template)
 
         cubename = os.path.join(outpath,'LimaBean_H2CO22_cube_experiment_'+experiment_suffix)
