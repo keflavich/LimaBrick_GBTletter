@@ -1,3 +1,12 @@
+"""
+This is analysis code to determine the atmospheric optical depth and examine
+data quality.  It is not part of the automatic data pipeline.
+
+Analysis of this data revealed that the first and last of the 3 maps made
+during this session were severely affected by excess noise at low elevations
+(airmass > 3).  This changed the overall calibration, not just adding noise but
+damaging signal, so it has to be excluded.
+"""
 from paths import AGBT14A_110_path,outpath
 import astropy.io.fits as pyfits
 import numpy as np
@@ -30,19 +39,24 @@ for sampler in ('C25','A9','A13','C29',):
 
     on_data = dataarr[CalOn*OKsource,exslice]
     off_data = dataarr[CalOff*OKsource,exslice]
+    tcal = data['TCAL'][CalOn*OKsource]
+    elev = data['ELEVATIO'][CalOn*OKsource]
+    az = data['AZIMUTH'][CalOn*OKsource]
 
     # terrible, disgusting, absolutely terrifying hack
     if sampler == 'C29':
         sz = min([on_data.shape[0],off_data.shape[0]])
         on_data = on_data[:sz,:]
         off_data = off_data[:sz,:]
+        tcal = tcal[:sz]
+        elev = elev[:sz]
+        az = az[:sz]
 
     offmean = np.mean(off_data,axis=1)
     onmean  = np.mean(on_data,axis=1)
     diffmean = onmean-offmean
-    tcal = data['TCAL'][CalOn*OKsource]
+
     tsys = ( offmean / diffmean * tcal + tcal/2.0 )
-    elev = data['ELEVATIO'][CalOn*OKsource]
     airmass = 1/np.cos((90-elev)/180*np.pi)
 
     OK2 = data['SAMPLER'] == sampler
@@ -75,7 +89,6 @@ for sampler in ('C25','A9','A13','C29',):
 
     pl.figure(2)
     pl.clf()
-    az = data['AZIMUTH'][CalOn*OKsource]
     az1 = data['AZIMUTH'][OK*CalOn*(data['OBJECT']=='LimaBeanOff')]
     pl.plot(az,tsys,'.')
     pl.plot(az1,ts1,'.')

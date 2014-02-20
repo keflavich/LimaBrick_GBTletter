@@ -1,3 +1,8 @@
+"""
+Create an H2CO 1-1 data cube with the "background" subtracted.  Uses an annular
+"rind" mask to estimate the background, then interpolates through the central
+regions (where The Brick is).
+"""
 from paths import datapath
 import FITS_tools
 import FITS_tools.cube_regrid
@@ -30,7 +35,7 @@ maskHDU.writeto(datapath+'brick_mask11.fits',clobber=True)
 maskHDU = fits.PrimaryHDU(data=mask22.astype('int'),header=flathead)
 maskHDU.writeto(datapath+'brick_mask22.fits',clobber=True)
 
-regions = pyregion.open(datapath+"brick_ellipse.reg")
+regions = pyregion.open("./data/brick_ellipse.reg")
 maskreg = regions.get_mask(maskHDU)
 # ellipse = [0.2570,0.0222,0.0426,0.0180,317]
 

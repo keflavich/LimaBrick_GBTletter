@@ -1,9 +1,18 @@
 from paths import figpath,datapath
 import aplpy
 import pylab as pl
+#import montage
 
 pl.figure(9)
 pl.clf()
+
+#http://irsa.ipac.caltech.edu/data/SPITZER/GLIMPSE/images/II/1.2_mosaics_v3.5/GLM_00000+0000_mosaic_I4.fits
+#http://irsa.ipac.caltech.edu/data/SPITZER/MIPSGAL/images/mosaics24/MG0000p005_024.fits
+#http://irsa.ipac.caltech.edu/data/SPITZER/MIPSGAL/images/mosaics24/MG0000n015_024.fits
+#for fullfn,cropfn in [('GCCBand_lb.2.fits','GCCBand_Brick_zoom_crop.fits'),
+#                      ('GCXBand2_lb.2.fits','GCXBand_Brick_zoom_crop.fits'),
+#                      TODO - THIS IS TEH FAILS
+#                     ]
 
 Figures = [aplpy.FITSFigure(datapath+'limabean_MIPS_24_crop.fits',
                             figure=pl.figure(9), convention='calabretta',
@@ -34,7 +43,7 @@ for F,(vmin,vmid,vmax) in zip(Figures,vm):
     F.refresh()
     
 
-Figures[3].show_regions('./brick_circles_nooffs.reg')
+Figures[3].show_regions('./data/brick_circles_nooffs.reg')
 Figures[3].refresh()
 
 F.save(figpath+'continuum_comparison.pdf', dpi=85)
@@ -46,6 +55,6 @@ F = aplpy.FITSFigure(datapath+'limabean_MIPS_24_crop.fits',
                      convention='calabretta')
 vmin,vmid,vmax = vm[0]
 F.show_grayscale(stretch='log',vmin=vmin,vmid=vmid,vmax=vmax)
-F.show_regions('./brick_circles_nooffs.reg')
+F.show_regions('./data/brick_circles_nooffs.reg')
 F.refresh()
 F.save(figpath+'apertures_on_24um.pdf')

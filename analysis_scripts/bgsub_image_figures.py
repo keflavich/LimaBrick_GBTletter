@@ -11,11 +11,14 @@ else:
 
 Figures = [
     aplpy.FITSFigure(datapath+'limabean_MIPS_24_crop.fits',
-                     figure=pl.figure(9),convention='calabretta', subplot=[0.1,0.1,0.3,0.8]),
+                     figure=pl.figure(9),convention='calabretta',
+                     subplot=[0.1,0.1,0.3,0.8]),
     aplpy.FITSFigure(datapath+'LimaBean_H2CO11_taucube_integrated.fits',
-                     figure=pl.figure(9),convention='calabretta', subplot=[0.4,0.1,0.3,0.8]),
+                     figure=pl.figure(9),convention='calabretta',
+                     subplot=[0.4,0.1,0.3,0.8]),
     aplpy.FITSFigure(datapath+'LimaBean_H2CO22_taucube_integrated.fits',
-                     figure=pl.figure(9),convention='calabretta', subplot=[0.7,0.1,0.3,0.8]),
+                     figure=pl.figure(9),convention='calabretta',
+                     subplot=[0.7,0.1,0.3,0.8]),
     ]
 
 vm = [('log',50,None,None),

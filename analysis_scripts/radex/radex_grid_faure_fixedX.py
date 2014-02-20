@@ -1,9 +1,10 @@
-#!/Library/Frameworks/Python.framework/Versions/Current/bin/python
+#!/usr/bin/env python
 """ WARNING - THIS IS NOT A CUBE GRID BUT A LINEAR GRID!!"""
 # #! /usr/bin/python
 #
 import math
 import os
+import sys
 import time
 #
 # Run a series of Radex models to estimate temperature & density
@@ -77,7 +78,7 @@ bw    = 0.01   # "bandwidth": free spectral range around line (used to say which
 # can run sphere or lvg
 # (note that you must generate these executables and name them yourself,
 # and they must be in your path or you can specify the full path)
-executable = "/Users/adam/repos/radex/bin/radex_lvg"
+executable = "radex"
 # executable = "radex_sphere"
 
 # verbosity
@@ -85,6 +86,12 @@ executable = "/Users/adam/repos/radex/bin/radex_lvg"
 # 1 = just output major statements (OK to print to screen)
 # 0 = silent (only prints exceptions)
 verbose = 2
+if verbose > 1:
+    logfile = 'radex_grid_faure_fixedX_log.log'
+    out = open(logfile,'w')
+else:
+    out = sys.STDOUT
+
 
 #
 # No user changes needed below this point.
@@ -192,10 +199,10 @@ if mpisize > 1:
     try:
         os.mkdir(newdir)
     except OSError:
-        print "%s exists, continuing" % newdir
+        print >>out, "%s exists, continuing" % newdir
     os.chdir(newdir)
 
-if verbose > 0: print "Running code ",executable," with temperatures ",temperatures," densities ",densities," and columns ",columns
+if verbose > 0: print >>out, "Running code ",executable," with temperatures ",temperatures," densities ",densities," and columns ",columns
 
 for iact,act in enumerate(acts):
     lowfreq = act[0]
@@ -203,7 +210,7 @@ for iact,act in enumerate(acts):
     gfil = act[2].replace(".dat",suffix+".dat")
     
     infile = open('radex.inp','w')
-    if verbose > 0: print "Processor %i: Starting " % mpirank,gfil
+    if verbose > 0: print >>out, "Processor %i: Starting " % mpirank,gfil
 
     for temp in temperatures:
         for opr in orthopararatio:
@@ -220,19 +227,22 @@ for iact,act in enumerate(acts):
                     infile.write('1\n')
 
                 # DEBUG logging
-                if verbose > 1: print "Processor %i " % mpirank,
-                if verbose > 1: print "temp : %g" % (temp),
-                if verbose > 1: print "Column : %g" % (col),
-                if verbose > 1: print "dens : %g" % (dens)
+                if verbose > 1: print >>out, "Processor %i " % mpirank,
+                if verbose > 1: print >>out, "temp : %g" % (temp),
+                if verbose > 1: print >>out, "Column : %g" % (col),
+                if verbose > 1: print >>out, "dens : %g" % (dens)
 
-    if verbose > 0: print "Processor %i: Finished writing infiles." % mpirank
+    if verbose > 0: print >>out, "Processor %i: Finished writing infiles." % mpirank
     if iact == 0:
         if verbose > 0: print "Processor %i: Starting radex code." % mpirank
-        status = os.system('%s < radex.inp > /dev/null' % executable)
+        status = os.system('%s < radex.inp > radex.log' % executable)
         if status != 0:
             print "Command %s failed with exit status %i" % ('%s < radex.inp > /dev/null' % executable,status)
+            print "Can see the output from radex in radex.log"
+            with open('radex.log') as f:
+                print f.readlines()[-1]
             import pdb; pdb.set_trace()
-        if verbose > 0: print "Processor %i: Finished Radex." % mpirank
+        if verbose > 0: print >>out, "Processor %i: Finished Radex." % mpirank
 
     if verbose > 0: print "Processor %i: Beginning output parsing." % mpirank
     grid = open(gfil,'w')
@@ -259,14 +269,14 @@ for iact,act in enumerate(acts):
 
 stop = time.time()
 dure = stop - start
-if verbose > 0: print "Processor %i Run time = %f seconds" % (mpirank,dure)
+if verbose > 0: print >>out, "Processor %i Run time = %f seconds" % (mpirank,dure)
 if mpisize > 1:
     os.chdir(pwd)
 
     MPI.COMM_WORLD.Barrier()
 
     if mpisize > 1 and mpirank == 0:
-        if verbose > 0: print "Starting cleanup"
+        if verbose > 0: print >>out, "Starting cleanup"
         import glob
         filelist = glob.glob("radex_temp_00/*.dat")
         for file in filelist:
@@ -283,4 +293,4 @@ if mpisize > 1:
         for file in radexoutlist:
             os.system("cat %s >> radex.out" % file)
         os.system("rm -r radex_temp_*")
-        if verbose > 0: print "Cleanup completed"
+        if verbose > 0: print >>out, "Cleanup completed"
