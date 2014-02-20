@@ -19,7 +19,7 @@ else:
     scubenh3 = pyspeckit.Cube(datapath+'NH3_rotcrop.fits')
 scubenh3.xarr.convert_to_unit('km/s')
 
-regfn = datapath+'brick_circles.reg'
+regfn = './data/brick_circles.reg'
 regions = pyregion.open(regfn)
 
 spectra11 = {}
