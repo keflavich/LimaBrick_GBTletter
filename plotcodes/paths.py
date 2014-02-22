@@ -1,0 +1,5 @@
+datapath = '/Users/adam/observations/gbt/LimaBeanmap/'
+figpath = '/Users/adam/work/h2co/limabean/figures/'
+datadir_C = '/Users/adam/observations/gbt/AGBT12B_221_01/'
+datadir_U = '/Users/adam/observations/gbt/AGBT14A_110_01/'
+radexdatapath = '../analysis_scripts/radex/'

@@ -1,3 +1,4 @@
+from paths import radexdatapath,datapath,figpath
 import pyspeckit
 import numpy as np
 import sys
@@ -20,11 +21,8 @@ master_linestyles = ['-']*10
 master_colors = (['#880000', '#008888', '#9933CC']+
                  ["#"+x for x in '348ABD, CCCCCC, A60628, 467821, CF4457, 188487, E24A33'.split(', ')])
 
-radexdatapath = '/Users/adam/work/h2co/modeling_paper/radex_data/' 
 
 faur = h2co_modeling.SmoothtauModels(datafile=radexdatapath+'faure/1-1_2-2_XH2CO_fixed_faure.dat')
-
-datapath = '/Users/adam/work/gc/limabean/'
 
 rbg = pyspeckit.Spectrum(datapath+'Brick_RatioSpectrum_BGsub.fits')
 rraw = pyspeckit.Spectrum(datapath+'Brick_RatioSpectrum.fits')
@@ -102,16 +100,16 @@ for abund in (-8,-8.5,-9,-10):
     pl.xlabel(r'Volume-averaged density $\log(n(H_2))$')
     pl.ylabel(r'Ratio $\tau_{1-1}/\tau_{2-2}$')
 
-    pl.savefig('/Users/adam/work/h2co/limabean/figures/tau_ratio_vs_density_thinlimit_sigmavary_Xm{}.pdf'.format(abs(abund)),bbox_inches='tight')
+    pl.savefig(figpath+'tau_ratio_vs_density_thinlimit_sigmavary_Xm{}.pdf'.format(abs(abund)),bbox_inches='tight')
 
     rvals_bg = rbg.slice(vrange[0],vrange[1],units='km/s').data
     lc = pl.hlines(rvals_bg,dens.min(),dens.max(),color='b',alpha=0.1,linewidth=10)
-    pl.savefig('/Users/adam/work/h2co/limabean/figures/tau_ratio_vs_density_thinlimit_sigmavary_Xm{}_withBrickBGsubdata.pdf'.format(abs(abund)),bbox_inches='tight')
+    pl.savefig(figpath+'tau_ratio_vs_density_thinlimit_sigmavary_Xm{}_withBrickBGsubdata.pdf'.format(abs(abund)),bbox_inches='tight')
 
     lc.set_visible(False)
     rvals_raw = rraw.slice(vrange[0],vrange[1],units='km/s').data
     pl.hlines(rvals_raw,dens.min(),dens.max(),color='g',alpha=0.1,linewidth=10)
-    pl.savefig('/Users/adam/work/h2co/limabean/figures/tau_ratio_vs_density_thinlimit_sigmavary_Xm{}_withBrickRawdata.pdf'.format(abs(abund)),bbox_inches='tight')
+    pl.savefig(figpath+'tau_ratio_vs_density_thinlimit_sigmavary_Xm{}_withBrickRawdata.pdf'.format(abs(abund)),bbox_inches='tight')
 
 
     pl.figure(2)
@@ -123,13 +121,13 @@ for abund in (-8,-8.5,-9,-10):
     pl.xlabel(r'Volume-averaged density $\log(n(H_2))$')
     pl.ylabel(r'$\tau$')
 
-    pl.savefig('/Users/adam/work/h2co/limabean/figures/tau_vs_density_thinlimit_sigmavary_Xm{}.pdf'.format(abs(abund)),bbox_inches='tight')
+    pl.savefig(figpath+'tau_vs_density_thinlimit_sigmavary_Xm{}.pdf'.format(abs(abund)),bbox_inches='tight')
 
     h11vals = h2co11.slice(vrange[0],vrange[1],units='km/s').data / fillingfactor
     h22vals = h2co22.slice(vrange[0],vrange[1],units='km/s').data / fillingfactor
     lc11 = pl.hlines(h11vals,dens.min(),dens.max(),color='k',alpha=0.05,linewidth=5,linestyle='-')
     lc22 = pl.hlines(h22vals,dens.min(),dens.max(),color='r',alpha=0.1,linewidth=5,linestyle='--')
-    pl.savefig('/Users/adam/work/h2co/limabean/figures/tau_vs_density_thinlimit_sigmavary_Xm{}_withBrickBGsubdata.pdf'.format(abs(abund)),bbox_inches='tight')
+    pl.savefig(figpath+'tau_vs_density_thinlimit_sigmavary_Xm{}_withBrickBGsubdata.pdf'.format(abs(abund)),bbox_inches='tight')
 
 pl.show()
 

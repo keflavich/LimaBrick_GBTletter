@@ -1,3 +1,4 @@
+from paths import datapath,figpath
 import aplpy
 import pylab as pl
 import numpy as np

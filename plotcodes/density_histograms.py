@@ -1,3 +1,4 @@
+from paths import datapath,figpath
 from astropy.io import fits
 import numpy as np
 import pylab as pl
@@ -5,10 +6,7 @@ import matplotlib
 from astropy import units as u
 from astropy import constants
 
-matplotlib.rc_file('ggplotrc')
-
-datapath = '/Users/adam/work/gc/limabean/'
-figpath = '/Users/adam/work/h2co/limabean/figures/'
+matplotlib.rc_file('./ggplotrc')
 
 vrange = [-20,50]
 

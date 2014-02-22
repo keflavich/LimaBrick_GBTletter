@@ -69,16 +69,21 @@ for sampler in ('C25','A9','A13','C29',):
     el1,ts1 = (data['ELEVATIO'][OK*CalOn*(data['OBJECT']=='LimaBeanOff')],data['TSYS'][OK*CalOn*(data['OBJECT']=='LimaBeanOff')])
     am1 = 1/np.cos((90-el1)/180*np.pi)
 
-    slope, trec = np.polyfit(am1,ts1,1)
+    ok = (am1==am1)*(ts1==ts1)
+    slope, trec = np.polyfit(am1[ok],ts1[ok],1)
 
     # from the logs
     tatm = 259
     tau  = -1*np.log(1-(tsys-trec)/tatm)
-    tauz = tau / airmass
+    tauz = np.median(tau / airmass)
+    tauz = 0.0110
+
+    tsys_corrected = tsys - (np.exp(tauz*airmass)-1)*tatm
 
     pl.figure(1)
     pl.clf()
     pl.plot(airmass,tsys,'.', alpha=0.7, zorder=1)
+    pl.plot(airmass,tsys_corrected,'.', alpha=0.5, zorder=0, color='r')
     pl.plot(am1,ts1,'.', alpha=0.9, zorder=3)
     pl.plot(np.linspace(2.5,4.5),np.linspace(2.5,4.5)*slope+trec, color='k', alpha=0.5, linewidth=3, linestyle='--',zorder=5)
     pl.xlabel("Airmass")

@@ -1,13 +1,10 @@
+from paths import datapath,figpath,datadir_C,datadir_U
 import matplotlib
 import pyspeckit
 from astropy.io import fits
 import pylab as pl
 
-datadir_C = '/Users/adam/observations/gbt/AGBT12B_221_01/'
-datadir_U = '/Users/adam/observations/gbt/AGBT14A_110_01/'
-figpath = '/Users/adam/work/h2co/limabean/figures/'
-
-matplotlib.rc_file('/Users/adam/.matplotlib/ggplotrc')
+matplotlib.rc_file('./ggplotrc')
 
 colors = ['k','r','g','b', 'm', "#348ABD", "#7A68A6"]
 
