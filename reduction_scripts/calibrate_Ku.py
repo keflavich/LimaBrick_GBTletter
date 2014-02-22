@@ -6,7 +6,6 @@ from paths import AGBT14A_110_path,outpath
 
 sourcename = "LimaBean"
 mapname = 'LimaBean'
-outpath = outpath % mapname
 
 filename = AGBT14A_110_path+'AGBT14A_110_01.raw.acs.fits'
 filepyfits = pyfits.open(filename,memmap=True)

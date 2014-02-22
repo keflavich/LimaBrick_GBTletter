@@ -8,8 +8,6 @@ import numpy as np
 np.seterr(all='ignore')
 from paths import outpath
 
-outpath = outpath % "LimaBean"
-
 cubename=outpath+'LimaBean_H2CO11_cube'
 #cubename_discrete='LimaBean_H2CO11_cube_discrete'
 # 15' x 12 '

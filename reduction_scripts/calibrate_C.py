@@ -10,7 +10,6 @@ refscans = [6,21]#,22,32]
 sourcename = "LimaBean"
 obsmode = "DecLatMap"
 mapname = 'LimaBean'
-outpath = outpath % mapname
 
 obsmode = 'RALongMap'
 scanrange=[22,32]

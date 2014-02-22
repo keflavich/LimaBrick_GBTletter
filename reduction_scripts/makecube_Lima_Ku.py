@@ -5,7 +5,6 @@ import sys
 from sdpy import makecube,make_off_template,calibrate_map_scans
 import numpy as np
 from paths import outpath
-outpath = outpath % "LimaBean"
 # to ignore div-by-zero errors?
 np.seterr(all='ignore')
 
@@ -37,7 +36,8 @@ for fn in files:
                               chmod=True,
                               add_with_kernel=True,
                               kernel_fwhm=20./3600.,
-                              velocityrange=[-400,400],excludefitrange=[-125,250],
+                              velocityrange=[-400,400],
+                              excludefitrange=[-125,250],
                               diagnostic_plot_name=fn.replace('.fits','_data_scrubbed.png'),
                               smoothto=2)
 

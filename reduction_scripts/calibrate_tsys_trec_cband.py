@@ -8,8 +8,6 @@ import sdpy
 import pylab as pl
 pl.matplotlib.rc_file('/Users/adam/.matplotlib/ggplotrc')
 
-outpath = outpath % 'LimaBean'
-
 filename = AGBT12B_221_path+'AGBT12B_221_01.raw.acs.fits'
 filepyfits = pyfits.open(filename,memmap=True)
 datapfits = filepyfits[1].data

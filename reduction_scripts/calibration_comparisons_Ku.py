@@ -14,7 +14,6 @@ import os
 
 sourcename = "LimaBean"
 mapname = 'LimaBean'
-outpath = outpath % mapname
 
 filename = AGBT14A_110_path+'AGBT14A_110_01.raw.acs.fits'
 filepyfits = pyfits.open(filename,memmap=True)
@@ -32,7 +31,7 @@ feednum = 1
 
 
 for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap'),([9,54],[62,98],[108,140]),([9,54],[62,98],[108,140])):
-    for min_scale_reference in (False,1,10):
+    for min_scale_reference in (1,10,False):
         for tsysmethod in ('perint','perscan'):
 
             # determine_best_off_Ku reveals that there is no need to interpolate the offs;
