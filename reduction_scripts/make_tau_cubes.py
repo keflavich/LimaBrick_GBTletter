@@ -10,7 +10,7 @@ import FITS_tools
 from paths import outpath
 import os
 
-datapath = outpath % "LimaBean"
+datapath = outpath
 
 fivecubes = ['LimaBean_H213CO_cube_sub.fits',
              'LimaBean_H2CO11_cube_sub.fits',
