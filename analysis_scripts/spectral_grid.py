@@ -22,6 +22,8 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
                   dy=2,
                   xc=48,
                   yc=45,
+                  xlabel="Velocity",
+                  ylabel="$T_A^*$ [K]$",
                   ratio=False):
 
     for c in [cube11,h213co11cube,cube22]:
@@ -37,18 +39,18 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
 
         c12.baseline(exclude=[-225,200],order=5)
         c13.baseline(exclude=[-225,200],order=5)
-        c13.plotter(label='H$_{2}$$^{13}$CO 1-1',axis=pl.gca(),color='b',alpha=0.5)
-        c12.plotter(axis=c13.plotter.axis,clear=False,color='k',label="H$_{2}$CO 1-1")
+        c13.plotter(label='H$_{2}$$^{13}$CO 1-1',axis=pl.gca(),color='b',alpha=0.5, refresh=False)
+        c12.plotter(axis=c13.plotter.axis,clear=False,color='k',label="H$_{2}$CO 1-1", refresh=False)
         #(c13*6).plotter(label='6$\\times$H$_{2}$$^{13}$CO',axis=pl.gca(),color='r',clear=False)
         c22.plotter(axis=c13.plotter.axis,clear=False,color='r',linewidth=2,alpha=0.8,
-                    label='H$_2$CO 2-2')
+                    label='H$_2$CO 2-2', refresh=False)
 
         if ratio:
             r = c12.copy()
             r.data = c22.data/c12.data
             r.data[(r.data>1)] = np.nan
             r.data[(r.data<1/13.)] = np.nan
-            r.plotter(axis=c13.plotter.axis,clear=False,color='r')
+            r.plotter(axis=c13.plotter.axis,clear=False,color='r', refresh=False)
         if dolegend:
             pl.legend(loc='best')
         pl.gca().set_xlim(-100,100)
@@ -72,14 +74,23 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
         sp.set_ylim(*yrange)
         if spx > 0:
             sp.set_yticks([])
+        else:
+            sp.set_yticks(sp.get_yticks()[1:])
         if spy < ny-1:
             sp.set_xticks([])
+        else:
+            sp.set_xticks(sp.get_xticks()[1:])
+        sp.set_xlabel("")
+        sp.set_ylabel("")
 
         (l,b), = w.wcs_pix2world([[spx*dx+xl,(ny-spy-1)*dy+yl]],0)
         sp.annotate('%0.3f %+0.3f' % (l,b),(0.5,0.9),xycoords='axes fraction',fontsize=12,
                     horizontalalignment='center')
 
-        pl.draw()
+    pl.figtext(0.5,0.01,xlabel)
+    pl.figtext(0.01,0.5,ylabel,rotation='vertical')
+
+    pl.draw()
 
 spectral_grid()
 pl.savefig(figpath+'spectralgrid_absorption.pdf')
@@ -88,17 +99,34 @@ spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits'),
               cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
               h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits'),
               figure=pl.figure(2,figsize=(10,10)),
-              yrange=(-0.05,0.2),
+              yrange=(-0.05,0.30),
+              ylabel=r'$\tau$',
+              xlabel=r'$V_{LSR}$ km s$^{-1}$',
               ratio=False)
 pl.savefig(figpath+'spectralgrid_optdepth.pdf')
 
 spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits'),
               cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
               h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits'),
-              figure=pl.figure(2,figsize=(10,10)),
-              yrange=(-0.05,0.2),
+              figure=pl.figure(3,figsize=(10,10)),
+              yrange=(-0.05,0.30),
               dx=4,dy=4,
               xc=51,
               yc=49,
+              ylabel=r'$\tau$',
+              xlabel=r'$V_{LSR}$ km s$^{-1}$',
               ratio=False)
 pl.savefig(figpath+'spectralgrid_optdepth_wide.pdf')
+
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits'),
+              figure=pl.figure(4,figsize=(10,10)),
+              yrange=(-0.05,0.30),
+              dx=6,dy=6,
+              xc=51,
+              yc=49,
+              ylabel=r'$\tau$',
+              xlabel=r'$V_{LSR}$ km s$^{-1}$',
+              ratio=False)
+pl.savefig(figpath+'spectralgrid_optdepth_vwide.pdf')

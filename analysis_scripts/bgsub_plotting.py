@@ -89,11 +89,13 @@ bg11m1 = pyspeckit.spectrum.classes.Spectrum.from_hdu(specHDU11bg)
 sp22m1 = pyspeckit.spectrum.classes.Spectrum.from_hdu(specHDU22)
 bg22m1 = pyspeckit.spectrum.classes.Spectrum.from_hdu(specHDU22bg)
 sp11m1.specname='H$_2$CO 1-1 Smooth Mask'
+sp11m1.unit=r'$\tau$'
 sp11m1.plotter(figure=pl.figure(14))
 bg11m1.plotter(axis=sp11m1.plotter.axis, clear=False, color='b')
 d11m1 = (sp11m1-bg11m1)
 d11m1.plotter(axis=sp11m1.plotter.axis, clear=False, color='r',ymin=bg11m1.data.min(), ymax=sp11m1.data.max())
 sp22m1.specname='H$_2$CO 2-2 Smooth Mask'
+sp22m1.unit=r'$\tau$'
 sp22m1.plotter(figure=pl.figure(15))
 bg22m1.plotter(axis=sp22m1.plotter.axis, clear=False, color='b')
 d22m1 = (sp22m1-bg22m1)
@@ -136,6 +138,7 @@ r3.plotter.savefig(figpath+'background_avgspectrum_ratio_smooth.pdf')
 dd = d11m1.copy()
 dd.specname = 'H$_2$CO 1-1 minus 2-2'
 dd.data = d11m1.data - d22m1.data
+dd.unit=r'$\tau_{1-1}-\tau_{2-2}$'
 dd.plotter(figure=pl.figure(18))
 d11m1.plotter(axis=dd.plotter.axis,color='b',clear=False)
 dd.plotter.savefig(figpath+'avgspectrum_11minus22.pdf')
