@@ -1,17 +1,18 @@
-from paths import datapath
+from paths import datapath,outpath
 from paths import figpath as figurepath
 import os
 import pyspeckit
 import pyregion
 import pylab as pl
 
-#scube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits')
-scube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube.fits')
+scube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits')
+taucube11 = pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_claw.fits')
 scube11.xarr.convert_to_unit('km/s')
-scube11_13 = pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube.fits')
+taucube11_13 = pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_claw.fits')
+scube11_13 = pyspeckit.Cube(datapath+'LimaBean_H213CO_cube_sub.fits')
 scube11_13.xarr.convert_to_unit('km/s')
-#scube22 = pyspeckit.Cube(datapath+'LimaBean_H2CO22_cube_sub_smoothtoCband.fits')
-scube22 = pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits')
+scube22 = pyspeckit.Cube(datapath+'LimaBean_H2CO22_cube_sub_smoothtoCband.fits')
+taucube22 = pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits')
 scube22.xarr.convert_to_unit('km/s')
 if os.path.exists(datapath+'Brick_HOPS_MOPRA_NH3_22_cube.fits'):
     scubenh3 = pyspeckit.Cube(datapath+'Brick_HOPS_MOPRA_NH3_22_cube.fits')
@@ -32,6 +33,10 @@ for ii, reg in enumerate(regions):
     sp11 = scube11.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
     sp22 = scube22.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
     sp11_13 = scube11_13.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
+    taup11 = taucube11.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
+    taup22 = taucube22.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
+    taup11_13 = taucube11_13.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
+
     spnh3 = scubenh3.get_apspec(reg.coord_list, coordsys='galactic', wunit='degree')
     spnh3.smooth(3,downsample=False)
     spnh3.data *= sp11.data.max()/spnh3.data.max()
@@ -39,10 +44,15 @@ for ii, reg in enumerate(regions):
     sp11.specname = reg.attr[1]['text']
     sp22.specname = reg.attr[1]['text']
     spnh3.specname = reg.attr[1]['text']
-    spectra11[ii] = sp11
-    spectra11_13[ii] = sp11_13
-    spectra22[ii] = sp22
+    taup11.specname = reg.attr[1]['text']
+    taup22.specname = reg.attr[1]['text']
+    spectra11[ii] = taup11
+    spectra11_13[ii] = taup11_13
+    spectra22[ii] = taup22
     spectranh3[ii] = spnh3
+    sp11.write(outpath+'H2CO_11_%s.fits' % sp11.specname.replace(" ","_"))
+    sp22.write(outpath+'H2CO_22_%s.fits' % sp22.specname.replace(" ","_"))
+    sp11_13.write(outpath+'H213CO_11_%s.fits' % sp11.specname.replace(" ","_"))
 
 nh3offset = 0.1
 twotwooffset = -0.025

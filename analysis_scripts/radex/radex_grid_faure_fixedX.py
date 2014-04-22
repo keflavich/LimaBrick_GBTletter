@@ -31,6 +31,9 @@ import time
 # The code creates (# processors) subdirectories, reformats that data, and
 # removes the temporary subdirectories.
 
+# Higher background temperature at The Brick's location
+tbg   = 15           # background radiation temperature
+
 # Grid boundaries
 #
 #tmin = 5.0   # minimum kinetic temperature (K)
@@ -61,7 +64,6 @@ densities = densities * len(abundance)
 #
 # Parameters to keep constant
 #
-tbg   = 2.73         # background radiation temperature
 cdmol_default = 1e12 # low enough to be optically thin (this is just the default passed to write_input; it is overridden)
 dv    = 1.0          # line width (km/s)
 

@@ -10,8 +10,8 @@ mask11 = fits.getdata(datapath+'brick_mask11.fits').astype('bool')
 mask22 = fits.getdata(datapath+'brick_mask22.fits').astype('bool')
 cube22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube.fits')
 cube22h = fits.getheader(datapath+'LimaBean_H2CO22_taucube.fits')
-cube11 = fits.getdata(datapath+'LimaBean_H2CO11_taucube.fits')
-cube11h = fits.getheader(datapath+'LimaBean_H2CO11_taucube.fits')
+cube11 = fits.getdata(datapath+'LimaBean_H2CO11_taucube_claw.fits')
+cube11h = fits.getheader(datapath+'LimaBean_H2CO11_taucube_claw.fits')
 
 aperture22 = (scipy.ndimage.morphology.binary_dilation(mask22, iterations=6)-
               scipy.ndimage.morphology.binary_dilation(mask22, iterations=2))
@@ -24,7 +24,7 @@ specHDU22bg.writeto(datapath+"BackgroundH2CO_22.fits",clobber=True)
 specHDU22 = fits.PrimaryHDU(data=fgspec,header=spechead)
 specHDU22.writeto(datapath+"BrickSpectrumH2CO_22.fits",clobber=True)
 
-cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube.fits')
+cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube_claw.fits')
 cube11h = cube11f[0].header
 cube11 = cube11f[0].data
 

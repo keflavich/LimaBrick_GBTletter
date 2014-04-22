@@ -3,20 +3,24 @@ from astropy.io import fits
 import numpy as np
 import h2co_modeling
 
-h2co11 = fits.getdata(datapath+'LimaBean_H2CO11_taucube.fits')
-h2co22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits')
+# This is obsolete: these optical depths are hackish.
+h2co11 = fits.getdata(datapath+'LimaBean_H2CO11_taucube_tex1.5_claw.fits')
+h2co22 = fits.getdata(datapath+'LimaBean_H2CO22_taucube_tex2_smoothtoCband.fits')
+#NOT Better to directly model TLINE
+#h2co11 = fits.getdata(datapath+'LimaBean_H2CO11_cube_sub.fits')
+#h2co22 = fits.getdata(datapath+'LimaBean_H2CO22_cube_sub_smoothtoCband.fits')
 
 noise11 = h2co11[:50,:,:].std(axis=0)
 noise22 = h2co22[:50,:,:].std(axis=0)
 
-sn11 = h2co11/noise11
-sn22 = h2co22/noise22
+sn11 = np.abs(h2co11)/noise11
+sn22 = np.abs(h2co22)/noise22
 
 mask = (sn11 > 2) & (sn22 > 2)
 ratio = h2co11/h2co22
 ratio[True-mask] = np.nan
 
-ratioF = fits.open(datapath+'LimaBean_H2CO11_taucube.fits')
+ratioF = fits.open(datapath+'LimaBean_H2CO11_cube_sub.fits')
 ratioF[0].data = ratio
 ratioF[0].header['BUNIT'] = 'none'
 ratioF.writeto(datapath+'LimaBean_H2CO11_to_22_tau_ratio.fits',clobber=True)
@@ -42,12 +46,19 @@ radexdatapath = './radex/'
 faur = h2co_modeling.SmoothtauModels(datafile=radexdatapath+'faure/1-1_2-2_XH2CO_fixed_faure.dat')
 
 abund = -8.5
-tau1,tau2,dens,col = faur.select_data(abundance=abund, opr=0.1, temperature=50)
+trot1,trot2,tex1,tex2,tau1,tau2,dens,col = faur.select_data(abundance=abund, opr=0.1, temperature=50)
+trot,vtrot,vtrot_ratio = faur.generate_trot_functions(abundance=abund, opr=0.1, temperature=50)
 tau,vtau,vtau_ratio = faur.generate_tau_functions(abundance=abund, opr=0.1, temperature=50)
 
 tauratio = vtau_ratio(dens, line1=tau1, line2=tau2, sigma=1.0)
+trotratio = vtrot_ratio(dens, line1=trot1, line2=trot2, sigma=1.0)
+trot1s = vtrot(dens, line=trot1, sigma=1.0)
+trot2s = vtrot(dens, line=trot2, sigma=1.0)
 
+# For optical depth: exclude things to the left of the bump
 ok = np.arange(tauratio.size) > np.argmax(tauratio)
+# only absorption allowed
+#ok = (trot1s<0) & (trot2s<0)
 
 def ratio_to_dens(ratio):
     inds = np.argsort(tauratio[ok])
@@ -55,7 +66,7 @@ def ratio_to_dens(ratio):
 
 dcube = ratio_to_dens(ratio)
 
-ratioF = fits.open(datapath+'LimaBean_H2CO11_taucube.fits')
+ratioF = fits.open(datapath+'LimaBean_H2CO11_cube_sub.fits')
 ratioF[0].data = dcube
 ratioF[0].header['BUNIT'] = 'log volume density'
 ratioF.writeto(datapath+'LimaBean_H2CO11_to_22_logdensity.fits',clobber=True)
@@ -63,6 +74,8 @@ ratioF.writeto(datapath+'LimaBean_H2CO11_to_22_logdensity.fits',clobber=True)
 
 hdr = ratioF[0].header
 xarr = (np.arange(hdr['NAXIS3'])-hdr['CRPIX3']+1)*hdr['CDELT3']+hdr['CRVAL3']
+if hdr['CUNIT3'] == 'm/s':
+    xarr /= 1e3
 
 flatfile = fits.open(datapath+'LimaBean_H2CO11_cube_continuum.fits')
 flatfile[0].header['BMAJ'] = 2.5/60./np.sqrt(8*np.log(2))

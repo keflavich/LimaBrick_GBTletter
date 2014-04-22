@@ -22,13 +22,14 @@ cmask = cutout > 1.5
 mask22 = np.zeros_like(summed22,dtype='bool')
 mask22[40:60,40:60] = cmask
 
-cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube.fits')
+cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube_claw.fits')
 cube11h = cube11f[0].header
 cube11 = cube11f[0].data
 
 summed11 = cube11[390:456,:,:].sum(axis=0)
 cutout = summed11[35:65,35:65]
-cmask = cutout > 5.25
+cmask = cutout > 5.25 # for "my" continuum
+cmask = cutout > 3 # for CLAW continuum
 mask11 = np.zeros_like(summed11,dtype='bool')
 mask11[35:65,35:65] = cmask
 flathead = FITS_tools.strip_headers.flatten_header(cube11h)
@@ -71,6 +72,6 @@ bgcube = FITS_tools.cube_regrid.spatial_smooth_cube(cube11, 10, interpolate_nan=
 cube11f[0].data = bgcube
 cube11f.writeto(datapath+'LimaBean_H2CO11_interpolated_background_cube.fits',clobber=True)
 
-cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube.fits')
+cube11f = fits.open(datapath+'LimaBean_H2CO11_taucube_claw.fits')
 cube11f[0].data -= bgcube
-cube11f.writeto(datapath+'LimaBean_H2CO11_taucube_backgroundsubtracted.fits',clobber=True)
+cube11f.writeto(datapath+'LimaBean_H2CO11_taucube_claw_backgroundsubtracted.fits',clobber=True)

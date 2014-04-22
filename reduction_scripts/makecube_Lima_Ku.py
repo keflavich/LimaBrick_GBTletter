@@ -124,6 +124,7 @@ for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C
     makecube.make_taucube(cubename,
                           cubename+"_continuum.fits",
                           etamb=0.886,
+                          tex=2.0,
                           suffix="_sub_smoothtoCband_vsmooth.fits",
                           outsuffix="_smoothtoCband_vsmooth.fits",
                           TCMB=2.7315+0.4)
@@ -131,6 +132,7 @@ for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C
     makecube.make_taucube(cubename,
                           cubename+"_continuum.fits",
                           etamb=0.886,
+                          tex=2.0,
                           suffix="_sub_smoothtoCband.fits",
                           outsuffix="_smoothtoCband.fits",
                           TCMB=2.7315+0.4)
@@ -138,6 +140,7 @@ for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C
     makecube.make_taucube(cubename,
                           cubename+"_continuum.fits",
                           etamb=0.886,
+                          tex=2.0,
                           suffix="_sub.fits",
                           outsuffix=".fits",
                           TCMB=2.7315+0.4)

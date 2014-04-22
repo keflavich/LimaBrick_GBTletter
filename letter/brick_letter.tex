@@ -10,6 +10,7 @@ Skip to Section \ref{sec:interp} if you want to avoid the calibration details.
 \section{Data}
 
 \subsection{Continuum}
+\label{sec:continuum}
 Because the \formaldehyde lines are seen in absorption against a continuum
 background, it is crucial to determine how much of the observed continuum at 2
 and 6 cm is behind The Brick.  A comparison between the radio continuum maps
@@ -25,8 +26,30 @@ The 2 cm continuum shows excellent correlation with the \citet{Law2008a} maps,
 albeit at higher spatial resolution.  Some minor artifacts are evident, but
 they do not overlap with The Brick and therefore are of minor concern.
 
+We compre
+
 At 6 cm, we opt to use the high-quality maps constructed by \citet{Law2008a} in
-place of creating our own continuum maps.
+place of creating our own continuum maps.  However, we show in Figure
+\ref{fig:lawcontcompare} that our data are in good agreement with the Law data
+excepting an additive offset, indicating that our calibration is accurate.
+This additive offset is important, as it results in a significant change in the
+derived \formaldehyde optical depth (see Section \ref{sec:opticaldepth} and
+Figure \ref{fig:clawtaucompare}).  The fact that this is purely an additive
+offset provides a strong confirmation of our overall calibration but highlights
+problems with finding an emission-free `off' position in the Galactic Center.
+
+\Figure{../figures/comparison_Law_to_Cband.pdf}
+{Comparison of our 6 cm continuum data to that of \citet{Law2008a}.  The blue
+contour highlights the 6 cm mask of The Brick as seen in \formaldehyde
+absorption.  The lower-left plot shows our measured brightness temperature vs.
+that of \citet{Law2008a} with blue points highlighting the region containing
+The Brick.  The green points show the same region, but with 5K added.
+This systematic \emph{additive} offset is seen at low brightness,
+indicating that we have not found an adequate continuum-free off-position
+within our $\sim15$\arcmin field.  The lower-right plot shows histograms of the
+overall continuum ratio and the continuum ratio towards The Brick before (blue)
+and after (green) adding 5K.
+}{fig:lawcontcompare}{0.5}{0}
 
 \Figure{../figures/continuum_comparison.pdf}
 {Comparison of the continuum at different bands
@@ -36,6 +59,7 @@ place of creating our own continuum maps.
 (d) GBT Ku-band (this work)
 In panel (d), the labeled green circles show the regions extracted in Section \ref{sec:Spectra}
 }{fig:cont}{0.5}{0}
+
 
 \subsection{Filling Factor}
 \label{sec:fillingfactor}
@@ -51,7 +75,7 @@ the absorbing foreground material may not quite fill the area seen as an IRDC.
 
 \subsection{Comparison of 2 cm and 6 cm data}
 Because the data are at different resolution, we smooth the 2 cm data with a
-FWHM=2.46 \arcmin gaussian in the image plane.  We then treat the 2 cm data as
+FWHM=2.46\arcmin gaussian in the image plane.  We then treat the 2 cm data as
 if it were observed with a 33m diameter telescope; this approach requires
 additional correction for filling factor but is the only sensible way to
 compare the two data sets.
@@ -184,12 +208,16 @@ density distribution function.
 
 \subsection{Optical Depth}
 \label{sec:opticaldepth}
+The optical depth is computed as 
+$$\tau(\nu) = -\log\left( \frac{T_{CMB}+T_{B}(\nu)/\eta_{MB}- T_{ex}}{T_{CMB}+T_{B,cont}/\eta_{MB} - T_{ex}}\right)$$
+
 It is reasonably likely that significant portions of the cloud are optically
-thick in the \oneone line, although the observed optical depth is $\sim 0.15$,
-which corrects to $0.39$ when accounting for filling factor, still well below
-1.  Any optically thick regions must be subtstructure within The Brick; the
-cloud is not optically thick at all positions even at the peak velocity.  The
-velocity wings are more likely to be optically thin throughout.
+thick in the \oneone line, although the observed optical depth in The Brick
+peaks at $\sim 0.15$, which corrects to $0.39$ when accounting for filling
+factor, still well below 1.  Any optically thick regions must be substructure
+within The Brick; the cloud is not optically thick at all positions even at the
+peak velocity.  The velocity wings are more likely to be optically thin
+throughout.
 
 The \twotwo line is unlikely to be optically thick to any significant degree,
 with an observed peak optical depth of $\tau\approx0.23$ at 50 \arcsec
@@ -201,6 +229,10 @@ Since the \oneone line may be thick, but the \twotwo cannot be, the
 
 In the most conservative scenario, we are measuring \emph{upper limits} on the
 gas density.
+
+\Figure{../figures/claw_tau_vs_mytau.pdf}
+{..}
+{fig:clawtaucompare}{0.5}{0}
 
 \subsection{Density}
 The lowest ratio reliably observed is $r\sim1.9$ at $v_{LSR}\approx 43 \kms$,

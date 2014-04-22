@@ -3,6 +3,7 @@ import aplpy
 import pylab as pl
 #import montage
 
+pl.close(9)
 pl.figure(9)
 pl.clf()
 
@@ -16,16 +17,20 @@ pl.clf()
 
 Figures = [aplpy.FITSFigure(datapath+'limabean_MIPS_24_crop.fits',
                             figure=pl.figure(9), convention='calabretta',
-                            subplot=[0.1,0.55,0.35,0.35]),
+                            #subplot=(2,2,1)),
+                            subplot=[0.1,0.55,0.45,0.45]),
            aplpy.FITSFigure(datapath+'GCCBand_Brick_zoom_crop.fits',
                             figure=pl.figure(9), convention='calabretta',
-                            subplot=[0.55,0.55,0.35,0.35]),
+                            #subplot=(2,2,2)),
+                            subplot=[0.55,0.55,0.45,0.45]),
            aplpy.FITSFigure(datapath+'GCXBand_Brick_zoom_crop.fits',
                             figure=pl.figure(9), convention='calabretta',
-                            subplot=[0.1,0.1,0.35,0.35]),
+                            #subplot=(2,2,3)),
+                            subplot=[0.1,0.1,0.45,0.45]),
            aplpy.FITSFigure(datapath+'LimaBean_H2CO22_cube_continuum.fits',
                             figure=pl.figure(9), convention='calabretta',
-                            subplot=[0.55,0.1,0.35,0.35]),
+                            #subplot=(2,2,4)),
+                            subplot=[0.55,0.1,0.45,0.45]),
            ]
 
 vm = [(50,None,None),
@@ -42,6 +47,13 @@ for F,(vmin,vmid,vmax) in zip(Figures,vm):
     F.recenter(0.26, 0.035, height=0.2, width=0.2)
     F.refresh()
     
+for ii in (1,3):
+    Figures[ii].axis_labels.hide_y()
+    Figures[ii].tick_labels.hide_y()
+for ii in (0,1):
+    Figures[ii].axis_labels.hide_x()
+    Figures[ii].tick_labels.hide_x()
+pl.subplots_adjust(hspace=0,wspace=0)
 
 Figures[3].show_regions('./data/brick_circles_nooffs.reg')
 Figures[3].refresh()
