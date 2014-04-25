@@ -7,7 +7,7 @@ from paths import AGBT14A_110_2_path,outpath
 sourcename = "LimaBean"
 mapname = 'LimaBean'
 
-filename = AGBT14A_110_2_path+'AGBT14A_110_02.raw.acs.fits'
+filename = AGBT14A_110_2_path+'AGBT14A_110_03.raw.acs.fits'
 filepyfits = pyfits.open(filename,memmap=True)
 datapfits = filepyfits[1].data
 dataarr = datapfits.DATA
@@ -26,15 +26,14 @@ feeds = {
         3: [1,2]
         }
 
-#for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap'),([9,54],[62,98],[108,140]),([9,54],[62,98],[108,140])):
-for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap'),([29,79],[80,96]),([30,78],[81,96])):
+for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap'),([11,79],),([12,78],)):
 
     ref1,ref2 = refscans
 
     for ifnum in samplers:
         for sampler,feednum in zip(samplers[ifnum],feeds[ifnum]):
 
-            savefile = AGBT14A_110_2_path+"AGBT14A_110_02_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
+            savefile = AGBT14A_110_2_path+"AGBT14A_110_03_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
 
             # determine_best_off_Ku reveals that there is no need to interpolate the offs;
             # even with a standard median there is no obvious signal
