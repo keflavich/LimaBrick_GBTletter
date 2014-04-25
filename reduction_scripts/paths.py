@@ -5,4 +5,5 @@
 AGBT12B_221_path = '/Users/adam/observations/gbt/AGBT12B_221_01/'
 AGBT14A_110_path = '/Users/adam/observations/gbt/AGBT14A_110_01/'
 AGBT14A_110_2_path = '/Users/adam/observations/gbt/AGBT14A_110_02/'
+AGBT14A_110_3_path = '/Users/adam/observations/gbt/AGBT14A_110_3/'
 outpath = '/Users/adam/observations/gbt/LimaBeanmap/'
