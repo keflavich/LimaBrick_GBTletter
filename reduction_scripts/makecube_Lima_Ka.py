@@ -9,7 +9,7 @@ from paths import outpath
 np.seterr(all='ignore')
 
 cubename = os.path.join(outpath,'LimaBean_H2CO33_cube')
-# 8' x 8' 
+# 8' x 8'
 makecube.generate_header(0.256, 0.0220, naxis1=100, naxis2=100, pixsize=10,
                          naxis3=500, cd3=1.0, clobber=True, restfreq=28.9748e9,
                          crval3=0.0, cunit3='km/s',
@@ -29,6 +29,20 @@ files = [os.path.join(outpath,x) for x in
           '14A_110_3_76to102_A13_F2.fits',
           '14A_110_3_102to142_A9_F1.fits',
           '14A_110_3_102to142_A13_F2.fits',
+          '14A_110_3_148to174_A9_F1.fits',
+          '14A_110_3_148to174_A13_F2.fits',
+          '14A_110_3_174to214_A9_F1.fits',
+          '14A_110_3_174to214_A13_F2.fits',
+          '14A_110_3_215to229_A9_F1.fits',
+          '14A_110_3_215to229_A13_F2.fits',
+          '14A_110_04_6to32_A9_F1.fits',
+          '14A_110_04_6to32_A13_F2.fits',
+          '14A_110_04_32to72_A9_F1.fits',
+          '14A_110_04_32to72_A13_F2.fits',
+          '14A_110_04_73to99_A9_F1.fits',
+          '14A_110_04_73to99_A13_F2.fits',
+          '14A_110_04_99to113_A9_F1.fits',
+          '14A_110_04_99to113_A13_F2.fits',
           ]
          ]
 
@@ -78,7 +92,7 @@ for cubename,restfreq,samplers in (
 
     makecube.make_blank_images(cubename,clobber=True)
 
-    files = [x for session,scan1,scan2 in ([2,2,3,3,3,3],[29,79,11,35,76,102],[80,96,35,75,102,142],) for x in
+    files = [x for session,scan1,scan2 in zip([2,2,3,3,3,3,3,3,3,3],[29,80,11,35,76,102,148,174,215],[79,96,35,75,102,142,174,214,229],) for x in
              [os.path.join(outpath,
                            '14A_110_%i_%ito%i_%s_F%i.fits' % (session,scan1,scan2,samplers[ii],sampler_feeds[samplers[ii]]))
               for ii in xrange(len(samplers))]]

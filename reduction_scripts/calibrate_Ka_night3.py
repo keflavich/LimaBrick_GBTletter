@@ -2,12 +2,12 @@ import astropy.io.fits as pyfits
 from sdpy import makecube,make_off_template,calibrate_map_scans
 import numpy as np
 from astropy import units as u
-from paths import AGBT14A_110_3_path,outpath
+from paths import AGBT14A_110_4_path,outpath
 import time
 
-sourcename = "LimaBean2"
+sourcename = "LimaBean3"
 
-filename = AGBT14A_110_3_path+'AGBT14A_110_3.raw.acs.fits'
+filename = AGBT14A_110_4_path+'AGBT14A_110_04.raw.acs.fits'
 filepyfits = pyfits.open(filename,memmap=True)
 datapfits = filepyfits[1].data
 dataarr = datapfits.DATA
@@ -26,9 +26,9 @@ feeds = {
         3: [1,2]
         }
 
-for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALongMap','DecLatMap','RALongMap','DecLatMap'),
-                                      ([11,35],[35,75],[76,102],[102,142],[148,174],[174,214],[215,229]),
-                                      ([12,34],[36,74],[77,101],[103,141],[149,173],[175,213],[216,229])):
+for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALongMap',),
+                                      ([6,32],[32,72],[73,99],[99,113]),
+                                      ([7,31],[33,71],[74,98],[100,113])):
 
     ref1,ref2 = refscans
 
@@ -37,7 +37,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALo
 
             t0 = time.time()
 
-            savefile = AGBT14A_110_3_path+"AGBT14A_110_3_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
+            savefile = AGBT14A_110_4_path+"AGBT14A_110_04_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
 
             # determine_best_off_Ku reveals that there is no need to interpolate the offs;
             # even with a standard median there is no obvious signal
@@ -107,7 +107,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALo
             else:
                 off_template = None
 
-            outfn = outpath+'14A_110_3_%ito%i_%s_F%i.fits' % (ref1,ref2,sampler,feednum)
+            outfn = outpath+'14A_110_04_%ito%i_%s_F%i.fits' % (ref1,ref2,sampler,feednum)
             calibrate_map_scans.calibrate_cube_data(datapfits,
                                                     outfn,
                                                     scanrange=scanrange,
@@ -117,7 +117,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALo
                                                     sampler=sampler,
                                                     filepyfits=filepyfits,
                                                     datapfits=datapfits,
-                                                    tau=0.045,
+                                                    tau=0.062,
                                                     dataarr=dataarr,
                                                     obsmode=obsmode,
                                                     sourcename=sourcename,
