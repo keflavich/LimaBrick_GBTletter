@@ -37,7 +37,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALo
 
             t0 = time.time()
 
-            savefile = AGBT14A_110_4_path+"AGBT14A_110_04_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
+            savefile = AGBT14A_110_4_path+"AGBT14A_110_4_{0}_fd{1}_if{2}_sr{3}-{4}".format(sampler,feednum,ifnum,ref1,ref2)
 
             # determine_best_off_Ku reveals that there is no need to interpolate the offs;
             # even with a standard median there is no obvious signal
@@ -107,7 +107,7 @@ for obsmode,refscans,scanrange in zip(('DecLatMap','RALongMap','DecLatMap','RALo
             else:
                 off_template = None
 
-            outfn = outpath+'14A_110_04_%ito%i_%s_F%i.fits' % (ref1,ref2,sampler,feednum)
+            outfn = outpath+'14A_110_4_%ito%i_%s_F%i.fits' % (ref1,ref2,sampler,feednum)
             calibrate_map_scans.calibrate_cube_data(datapfits,
                                                     outfn,
                                                     scanrange=scanrange,

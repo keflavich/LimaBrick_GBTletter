@@ -76,7 +76,7 @@ for cubename,restfreq,samplers in (
         #('LimaBean_H110a_cube', 4.874157e9, ('D33','D37')),
         ('LimaBean_H213CO33_cube', 27.55567, ["A10","A14"]),
         ('LimaBean_H2C18O33_cube', 26.33016, ["B18","B22"]),
-        ('LimaBean_H62a_cube', 26939.16, ["B17","B21"]),
+        ('LimaBean_H62a_cube', 26.93916, ["B17","B21"]),
         #('LimaBean_H109a_cube', 5.008922e9, ('B18','B22')),
         #('LimaBean_H112a_cube', 4.61879e9, ('C26','C30')),
         #('LimaBean_OHF44_cube', 5.52344e9, ('A10','A14')),
@@ -92,10 +92,14 @@ for cubename,restfreq,samplers in (
 
     makecube.make_blank_images(cubename,clobber=True)
 
-    files = [x for session,scan1,scan2 in zip([2,2,3,3,3,3,3,3,3,3],[29,80,11,35,76,102,148,174,215],[79,96,35,75,102,142,174,214,229],) for x in
-             [os.path.join(outpath,
-                           '14A_110_%i_%ito%i_%s_F%i.fits' % (session,scan1,scan2,samplers[ii],sampler_feeds[samplers[ii]]))
-              for ii in xrange(len(samplers))]]
+    #INLINE WHOA
+    files = [x for session,scan1,scan2 in zip([2, 2, 3, 3, 3,  3,  3,  3,  3,"04","04","04","04"],
+                                              [29,80,11,35,76, 102,148,174,215,6, 32,73,99],
+                                              [79,96,35,75,102,142,174,214,229,32,72,99,113],)
+             for x in [os.path.join(outpath, '14A_110_%s_%ito%i_%s_F%i.fits' %
+                                    (session,scan1,scan2,samplers[ii],sampler_feeds[samplers[ii]]))
+                       for ii in xrange(len(samplers))]]
+
     for fn in files:
         makecube.add_file_to_cube(fn,
                                   cubename+'.fits',
