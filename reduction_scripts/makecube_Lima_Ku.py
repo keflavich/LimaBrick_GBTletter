@@ -102,8 +102,9 @@ for cubename,restfreq,samplers in (
 #import FITS_tools
 import FITS_tools.cube_regrid
 from astropy.io import fits
-# TODO: REPLACE WITH FITS_TOOLS!!
-from agpy.cubes import smooth_cube
+## TODO: REPLACE WITH FITS_TOOLS!!
+#from agpy.cubes import smooth_cube
+from FITS_tools.cube_regrid import spatial_smooth_cube
 
 for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C18O22_cube'):
 
@@ -112,7 +113,7 @@ for cubename in ('LimaBean_H2CO22_cube', 'LimaBean_H213CO22_cube', 'LimaBean_H2C
     # kernel = ((2.5*60)**2 -  50.**2)**0.5 / sqrt(8*log(2)) = 60 arcsec
     # 60 arcsec / 15 "/pixel = 4
     cubesm2 = FITS_tools.cube_regrid.gsmooth_cube(cube[0].data, [5,4,4], use_fft=True, psf_pad=False, fft_pad=False)
-    cubesm = smooth_cube(cube[0].data, kernelwidth=4, interpolate_nan=True)
+    cubesm = spatial_smooth_cube(cube[0].data, kernelwidth=4, interpolate_nan=True)
     cube[0].data = cubesm
     cube.writeto(cubename+"_sub_smoothtoCband.fits",clobber=True)
     cube[0].data = cubesm2

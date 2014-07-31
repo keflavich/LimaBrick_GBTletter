@@ -47,10 +47,12 @@ for abund in (-8,-8.5,-9,-10):
     for sigma in (1.0, 2.0):
         # OPR = 0.1 corresponds to 38K:
         # OPR ~ 9 exp (-170.5/T) [Faure priv. comm]
-        tau1,tau2,dens,col = faur.select_data(abund, temperature=50, opr=0.1)
+        trot1x,trot2x,tex1x,tex2x,tau1,tau2,dens,col = faur.select_data(abund, temperature=50, opr=0.1)
         tau,vtau,vtau_ratio = faur.generate_tau_functions(abundance=abund, temperature=50, opr=0.1)
+        #tline,vtline,vtline_ratio,tline1,tline2 = faur.generate_tau_functions(abundance=abund, temperature=50, opr=0.1)
 
         tauratio = vtau_ratio(dens, line1=tau1, line2=tau2, sigma=sigma)
+        #tauratio = vtline_Ratio(dens, lvg_tau1=tau1, lvg_tau2=tau2, sigma=sigma,
         tauA = vtau(dens, line=tau1, sigma=sigma)
         tauB = vtau(dens, line=tau2, sigma=sigma)
 

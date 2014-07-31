@@ -14,6 +14,7 @@ np.seterr(all='ignore')
 def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'),
                   h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_cube_sub.fits'),
                   cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_cube_sub_smoothtoCband.fits'),
+                  cube33=pyspeckit.Cube(datapath+'LimaBean_H2CO33_cube_sub_smoothtoCband.fits'),
                   figure=pl.figure(1,figsize=(10,10)),
                   yrange=(-2.1,0.5),
                   nx=6,
@@ -26,15 +27,16 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
                   ylabel="$T_A^*$ [K]$",
                   ratio=False):
 
-    for c in [cube11,h213co11cube,cube22]:
+    for c in [cube11,h213co11cube,cube22,cube33]:
         c.xarr.convert_to_unit('km/s')
 
     def some_plots(xx,yy,dolegend=False):
         c13 = h213co11cube.get_spectrum(xx,yy)
         c12 = cube11.get_spectrum(xx,yy)
         c22 = cube22.get_spectrum(xx,yy)
+        c33 = cube33.get_spectrum(xx,yy)
 
-        for c in (c12,c13,c22):
+        for c in (c12,c13,c22,c33):
             c.plotter.autorefresh=False
 
         c12.baseline(exclude=[-225,200],order=5)
@@ -47,6 +49,8 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
         #(c13*6).plotter(label='6$\\times$H$_{2}$$^{13}$CO',axis=pl.gca(),color='r',clear=False)
         c22.plotter(axis=c13.plotter.axis,clear=False,color='r',linewidth=2,alpha=0.5,
                     label='H$_2$CO 2-2', refresh=False)
+        c33.plotter(axis=c13.plotter.axis,clear=False,color='orange',linewidth=2,alpha=0.5,
+                    label='H$_2$CO 3-3', refresh=False)
 
         if ratio:
             r = c12.copy()
@@ -100,38 +104,41 @@ def spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_cube_sub.fits'
 spectral_grid()
 pl.savefig(figpath+'spectralgrid_absorption.pdf')
 
-spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_tex1.5_claw.fits'),
-              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_tex2_smoothtoCband.fits'),
-              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_tex1.5_claw.fits'),
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_claw.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              cube33=pyspeckit.Cube(datapath+'LimaBean_H2CO33_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_claw.fits'),
               figure=pl.figure(2,figsize=(10,10)),
               yrange=(-0.05,0.30),
-              ylabel=r'$\tau$',
+              ylabel=r'$\tau_{observed}$',
               xlabel=r'$V_{LSR}$ km s$^{-1}$',
               ratio=False)
 pl.savefig(figpath+'spectralgrid_optdepth.pdf')
 
-spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_tex1.5_claw.fits'),
-              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_tex2_smoothtoCband.fits'),
-              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_tex1.5_claw.fits'),
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_claw.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              cube33=pyspeckit.Cube(datapath+'LimaBean_H2CO33_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_claw.fits'),
               figure=pl.figure(3,figsize=(10,10)),
               yrange=(-0.05,0.30),
               dx=4,dy=4,
               xc=51,
               yc=49,
-              ylabel=r'$\tau$',
+              ylabel=r'$\tau_{observed}$',
               xlabel=r'$V_{LSR}$ km s$^{-1}$',
               ratio=False)
 pl.savefig(figpath+'spectralgrid_optdepth_wide.pdf')
 
-spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_tex1.5_claw.fits'),
-              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_tex2_smoothtoCband.fits'),
-              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_tex1.5_claw.fits'),
+spectral_grid(cube11=pyspeckit.Cube(datapath+'LimaBean_H2CO11_taucube_claw.fits'),
+              cube22=pyspeckit.Cube(datapath+'LimaBean_H2CO22_taucube_smoothtoCband.fits'),
+              cube33=pyspeckit.Cube(datapath+'LimaBean_H2CO33_taucube_smoothtoCband.fits'),
+              h213co11cube=pyspeckit.Cube(datapath+'LimaBean_H213CO_taucube_claw.fits'),
               figure=pl.figure(4,figsize=(10,10)),
               yrange=(-0.05,0.30),
               dx=6,dy=6,
               xc=51,
               yc=49,
-              ylabel=r'$\tau$',
+              ylabel=r'$\tau_{observed}$',
               xlabel=r'$V_{LSR}$ km s$^{-1}$',
               ratio=False)
 pl.savefig(figpath+'spectralgrid_optdepth_vwide.pdf')

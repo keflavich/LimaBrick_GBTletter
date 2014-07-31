@@ -7,6 +7,7 @@ import numpy as np
 from paths import outpath
 # to ignore div-by-zero errors?
 np.seterr(all='ignore')
+import FITS_tools
 
 cubename = os.path.join(outpath,'LimaBean_H2CO33_cube')
 # 8' x 8'
@@ -49,6 +50,7 @@ files = [os.path.join(outpath,x) for x in
 file_pairs = zip(files[::2],files[1::2]) + zip(files[1::2],files[::2])
 
 for fn, fn2 in file_pairs:
+    print "Loading file %s" % fn
     data = pyfits.getdata(fn)
     data2 = pyfits.getdata(fn2)
     fileheader = pyfits.getheader(fn)
@@ -114,6 +116,7 @@ for cubename,restfreq,samplers in (
     file_pairs = zip(files[::2],files[1::2]) + zip(files[1::2],files[::2])
 
     for fn, fn2 in file_pairs:
+        print "Loading file %s" % fn
         data = pyfits.getdata(fn)
         data2 = pyfits.getdata(fn2)
         fileheader = pyfits.getheader(fn)
@@ -136,3 +139,99 @@ for cubename,restfreq,samplers in (
     makecube.make_flats(cubename,vrange=[-20,60],noisevrange=[150,200])
 
 execfile('make_taucubes_lima_ka.py')
+
+template = cubename[:-4]+"{cubetype}.fits"
+for cubetype in ("cube","taucube","cube_sub"):
+    rcube = FITS_tools.regrid_fits_cube(template.format(cubetype=cubetype),
+                                        fits.getheader(cubename.replace('33','22')+".fits"))
+    rcube.writeto(template.format(cubetype=cubetype+"_regrid22"), clobber=True)
+
+#import FITS_tools
+import FITS_tools.cube_regrid
+from astropy.io import fits
+## TODO: REPLACE WITH FITS_TOOLS!!
+#from agpy.cubes import smooth_cube
+from FITS_tools.cube_regrid import spatial_smooth_cube
+import time
+from astropy import log
+
+for cubename in ('LimaBean_H2CO33_cube', 'LimaBean_H213CO33_cube', 'LimaBean_H2C18O33_cube'):
+
+    cubename = os.path.join(outpath,cubename)
+    cube = fits.open(cubename+"_sub.fits")
+    # cband = 156.22
+    # kuband = 52.07
+    # kaband = 26.2   = 1.22*((28.8*u.GHz).to(u.m, u.spectral()) / (100*u.m)).to(u.arcsec, u.dimensionless_angles())
+    # kernel1 = (156.22**2-26.2**2)**0.5 = 154 arcsec
+    # kernel2 = (52.07**2-26.2**2)**0.5  = 45 arcsec
+    # 154 arcsec / 10 "/pixel = 15.4
+    # 45 arcsec / 10 "/pixel = 4.5
+    t0 = time.time()
+    log.info('Smoothing {0} to Ku band resolution.'.format(cubename))
+    cubesm2 = FITS_tools.cube_regrid.gsmooth_cube(cube[0].data, [5,4.5,4.5], use_fft=True, psf_pad=False, fft_pad=False)
+    cubesm = spatial_smooth_cube(cube[0].data, kernelwidth=4.5, interpolate_nan=True)
+    cube[0].data = cubesm
+    cube.writeto(cubename+"_sub_smoothtoKuband.fits",clobber=True)
+    cube[0].data = cubesm2
+    cube.writeto(cubename+"_sub_smoothtoKuband_vsmooth.fits",clobber=True)
+    log.info("Done smoothing to Ku-band resolution.  Elapsed: {0} seconds".format(time.time()-t0))
+    t0 = time.time()
+
+
+    log.info('Smoothing {0} to C band resolution.'.format(cubename))
+    cubesm2 = FITS_tools.cube_regrid.gsmooth_cube(cube[0].data, [5,15.4,15.4], use_fft=True, psf_pad=False, fft_pad=False)
+    cubesm = spatial_smooth_cube(cube[0].data, kernelwidth=15.4, interpolate_nan=True)
+    cube[0].data = cubesm
+    cube.writeto(cubename+"_sub_smoothtoCband.fits",clobber=True)
+    cube[0].data = cubesm2
+    cube.writeto(cubename+"_sub_smoothtoCband_vsmooth.fits",clobber=True)
+    log.info("Done smoothing to C-band resolution.  Elapsed: {0} seconds".format(time.time()-t0))
+    t0 = time.time()
+
+    log.info("Regridding smoothed images to exact resolution of C- and Ku-band cubes")
+    cband_header = fits.getheader(os.path.join(outpath, "LimaBean_H2CO22_cube_sub_smoothtoCband.fits"))
+    FITS_tools.cube_regrid.regrid_fits_cube(cubename+"_sub_smoothtoCband.fits", cband_header,
+                                            outfilename=cubename+"_sub_smoothANDgridtoCband.fits",
+                                            clobber=True)
+    FITS_tools.cube_regrid.regrid_fits_cube(cubename+"_sub_smoothtoCband_vsmooth.fits", cband_header,
+                                            outfilename=cubename+"_sub_smoothANDgridtoCband_vsmooth.fits",
+                                            clobber=True)
+    kuband_header = fits.getheader(os.path.join(outpath, "LimaBean_H2CO22_cube_sub.fits"))
+    FITS_tools.cube_regrid.regrid_fits_cube(cubename+"_sub_smoothtoKuband.fits", kuband_header,
+                                            outfilename=cubename+"_sub_smoothANDgridtoKuband.fits",
+                                            clobber=True)
+    FITS_tools.cube_regrid.regrid_fits_cube(cubename+"_sub_smoothtoKuband_vsmooth.fits", kuband_header,
+                                            outfilename=cubename+"_sub_smoothANDgridtoKuband_vsmooth.fits",
+                                            clobber=True)
+    log.info("Done regridding smoothed images to exact resolution of C- and Ku-band cubes."
+             "  Elapsed: {0} seconds".format(time.time()-t0))
+
+    #makecube.make_taucube(cubename,cubename+"_continuum.fits",etamb=0.886)
+    #makecube.make_taucube(cubename,cubename+"_continuum.fits",etamb=0.886, suffix="_sub_smoothtoCband.fits")
+    # -0.4 is the most negative point in the continuum map...
+    etamb = 0.68 * 1.32
+    makecube.make_taucube(cubename,
+                          cubename+"_continuum.fits",
+                          etamb=etamb,
+                          tex=2.0,
+                          suffix="_sub_smoothtoKuband_vsmooth.fits",
+                          outsuffix="_smoothtoKuband_vsmooth.fits",
+                          TCMB=2.7315+0.4)
+
+    makecube.make_taucube(cubename,
+                          cubename+"_continuum.fits",
+                          etamb=etamb,
+                          tex=2.0,
+                          suffix="_sub_smoothtoKuband.fits",
+                          outsuffix="_smoothtoKuband.fits",
+                          TCMB=2.7315+0.4)
+
+    makecube.make_taucube(cubename,
+                          cubename+"_continuum.fits",
+                          etamb=etamb,
+                          tex=2.0,
+                          suffix="_sub.fits",
+                          outsuffix=".fits",
+                          TCMB=2.7315+0.4)
+
+
