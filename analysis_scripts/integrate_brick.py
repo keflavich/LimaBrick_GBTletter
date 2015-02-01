@@ -7,8 +7,13 @@ vrange = [-20,50]
 
 def integrate(vrange=vrange,suffix='_integrated.fits'):
     for fn in ['LimaBean_H2CO11_taucube.fits',
-               'LimaBean_H2CO11_taucube_claw.fits',
-               'LimaBean_H2CO22_taucube.fits',]:
+               #'LimaBean_H2CO11_taucube_claw.fits',
+               'LimaBean_H2CO22_taucube.fits',
+               'LimaBean_H2CO33_taucube.fits',
+               'LimaBean_H2CO33_taucube_smoothtoKuband.fits',
+               'LimaBean_H2CO22_taucube_smoothtoCband.fits',
+               'LimaBean_H2CO33_taucube_smoothtoCband.fits',
+              ]:
         fn = datapath+fn
         hdu = fits.open(fn)
         hdr = hdu[0].header
@@ -28,5 +33,6 @@ def integrate(vrange=vrange,suffix='_integrated.fits'):
 
 integrate()
 integrate([61,91],suffix='_70kmscloud_integrated.fits')
+integrate([0,55],suffix='_0to55kms_integrated.fits')
 
 
